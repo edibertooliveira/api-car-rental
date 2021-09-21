@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
+import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm'
 import {ICar} from "../../domain/models/ICar";
 
 @Entity('cars')
@@ -24,9 +24,9 @@ export default class Car implements ICar {
   
   @Column()
   license_plate: string
-  
-  @Column()
-  created_at: string
+
+  @CreateDateColumn()
+  created_at: Date
   
 }
 

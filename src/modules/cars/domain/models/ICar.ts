@@ -6,5 +6,5 @@ export interface ICar {
   daily_rate: Number
   available: Boolean
   license_plate: string
-  created_at: string
+  created_at: Date
 }

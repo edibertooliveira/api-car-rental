@@ -23,21 +23,17 @@ export default class CarRepository implements ICarRepository {
     })
   }
   public async findById(id: string): Promise<ICar> {
-    return this.entityRepository.findOne({
-      where: {
-        id,
-      },
-    })
+    return this.entityRepository.findOne(id)
   }
-  public create({
+  public async create({
     name,
     brand,
     description,
     daily_rate,
     available,
     license_plate,
-  }: ICreateCar): ICar {
-    return this.entityRepository.create({
+  }: ICreateCar): Promise<ICar> {
+    const car = this.entityRepository.create({
       name,
       brand,
       description,
@@ -45,6 +41,8 @@ export default class CarRepository implements ICarRepository {
       available,
       license_plate,
     })
+
+    return await this.entityRepository.save(car);
   }
   public async save(car: ICar): Promise<ICar> {
     return await this.entityRepository.save(car);

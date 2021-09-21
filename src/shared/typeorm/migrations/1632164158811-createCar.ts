@@ -22,17 +22,14 @@ export class createCar1632164158811 implements MigrationInterface {
                     {
                         name: 'brand',
                         type: 'varchar',
-                        isNullable: true
                     },
                     {
                         name: 'description',
                         type: 'varchar',
-                        isNullable: true
                     },
                     {
                         name: 'daily_rate',
                         type: 'numeric',
-                        isNullable: true
                     },
                     {
                         name: 'available',
@@ -42,7 +39,6 @@ export class createCar1632164158811 implements MigrationInterface {
                     {
                         name:'license_plate',
                         type: 'varchar',
-                        isNullable: true
                     },
                     {
                         name: 'created_at',

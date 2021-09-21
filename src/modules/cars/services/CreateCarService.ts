@@ -22,7 +22,7 @@ export default class CreateCarService {
             throw new ApiError('There is already one car with this name', 409);
         }
 
-        const car = this.carsRepository.create({
+        const car = await this.carsRepository.create({
             name,
             brand,
             description,
@@ -30,8 +30,6 @@ export default class CreateCarService {
             available,
             license_plate,
         });
-
-        await this.carsRepository.save(car);
-        return car;
+        return car
     }
 }
