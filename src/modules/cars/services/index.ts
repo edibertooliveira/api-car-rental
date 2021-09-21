@@ -1,7 +1,4 @@
-import CreateCarService from "./CreateCarService";
-import ListCarsService from "./ListCarsService";
+import CreateCarService from './CreateCarService';
+import ListCarsService from './ListCarsService';
 
-export  {
-    CreateCarService,
-    ListCarsService
-}
+export { CreateCarService, ListCarsService };

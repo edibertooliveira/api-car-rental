@@ -1,15 +1,15 @@
-import './container'
-import createConnection from './typeorm'
+import './container';
+import createConnection from './typeorm';
 
 import express from 'express';
 import router from './routes';
 
-createConnection()
+createConnection();
 
-const app = express()
+const app = express();
 
-app.use(express.json())
+app.use(express.json());
 
-app.use('/api', router)
+app.use('/api', router);
 
-export default app
+export default app;

@@ -1,32 +1,34 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn} from 'typeorm'
-import {ICar} from "../../domain/models/ICar";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { ICar } from '../../domain/models/ICar';
 
 @Entity('cars')
 export default class Car implements ICar {
-  
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @Column()
-  name: string
-  
+  name: string;
+
   @Column()
-  brand: string
-  
+  brand: string;
+
   @Column()
-  description: string
-  
+  description: string;
+
   @Column()
-  daily_rate: Number
-  
+  daily_rate: number;
+
   @Column()
-  available: Boolean
-  
+  available: boolean;
+
   @Column()
-  license_plate: string
+  license_plate: string;
 
   @CreateDateColumn()
-  created_at: Date
-  
+  created_at: Date;
 }
-

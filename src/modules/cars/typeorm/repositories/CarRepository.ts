@@ -1,15 +1,14 @@
-import { getRepository, Repository } from "typeorm";
+import { getRepository, Repository } from 'typeorm';
 
-import Car from '../entities/Car'
-import {ICarRepository} from "../../domain/repositories/ICarRepository";
-import {ICar} from "../../domain/models/ICar";
-import {ICreateCar} from "../../domain/models/ICreateCar";
+import Car from '../entities/Car';
+import { ICarRepository } from '../../domain/repositories/ICarRepository';
+import { ICar } from '../../domain/models/ICar';
+import { ICreateCar } from '../../domain/models/ICreateCar';
 
 export default class CarRepository implements ICarRepository {
-
-  private entityRepository: Repository<ICar>
+  private entityRepository: Repository<ICar>;
   constructor() {
-    this.entityRepository = getRepository(Car)
+    this.entityRepository = getRepository(Car);
   }
 
   public async findAll(): Promise<ICar[]> {
@@ -20,10 +19,10 @@ export default class CarRepository implements ICarRepository {
       where: {
         name,
       },
-    })
+    });
   }
   public async findById(id: string): Promise<ICar> {
-    return this.entityRepository.findOne(id)
+    return this.entityRepository.findOne(id);
   }
   public async create({
     name,
@@ -40,7 +39,7 @@ export default class CarRepository implements ICarRepository {
       daily_rate,
       available,
       license_plate,
-    })
+    });
 
     return await this.entityRepository.save(car);
   }

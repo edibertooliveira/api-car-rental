@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import carsRouter from "../../modules/cars/routes/car.routes";
+import carsRouter from '../../modules/cars/routes/car.routes';
 
 const router = Router();
 
-router.use('/cars', carsRouter)
+router.use('/cars', carsRouter);
 
-export default router
+export default router;
