@@ -1,9 +1,9 @@
-import { inject, injectable } from 'tsyringe';
+import {inject, injectable} from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
-import { ICarRepository } from '../domain/repositories/ICarRepository';
-import { ICreateCar } from '../domain/models/ICreateCar';
-import { ICar } from '../domain/models/ICar';
+import {ICarRepository} from '../domain/repositories/ICarRepository';
+import {ICreateCar} from '../domain/models/ICreateCar';
+import {ICar} from '../domain/models/ICar';
 
 @injectable()
 export default class CreateCarService {
@@ -21,7 +21,7 @@ export default class CreateCarService {
       throw new ApiError('There is already one car with this name', 409);
     }
 
-    const car = await this.carsRepository.create({
+    return this.carsRepository.create({
       name,
       brand,
       description,
@@ -29,6 +29,5 @@ export default class CreateCarService {
       available,
       license_plate,
     });
-    return car;
   }
 }

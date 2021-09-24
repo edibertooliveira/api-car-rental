@@ -41,9 +41,9 @@ export default class CarRepository implements ICarRepository {
       license_plate,
     });
 
-    return await this.entityRepository.save(car);
+    return this.entityRepository.save(car);
   }
   public async save(car: ICar): Promise<ICar> {
-    return await this.entityRepository.save(car);
+    return this.entityRepository.save(car);
   }
 }
