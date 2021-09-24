@@ -3,6 +3,6 @@ import carsRouter from '../../modules/cars/routes/car.routes';
 
 const router = Router();
 
-router.use('/cars', carsRouter);
+router.use(carsRouter);
 
 export default router;
