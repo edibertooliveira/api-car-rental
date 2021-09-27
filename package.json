@@ -8,9 +8,9 @@
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
     "lint": "eslint . --ext .ts",
     "lint-fix": "eslint . --ext .ts --fix",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest --runInBand",
-    "test:watch": "NODE_OPTIONS=--experimental-vm-modules npx jest --watch --runInBand",
-    "test:cov": "NODE_OPTIONS=--experimental-vm-modules npx jest --no-cache --runInBand --coverage"
+    "test": "jest --runInBand",
+    "test:watch": "jest --watch --runInBand",
+    "test:cov": "jest --no-cache --runInBand --coverage"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
