@@ -2,7 +2,7 @@
   "name": "default",
   "type": "postgres",
   "host": "localhost",
-  "port": 5430,
+  "port": 5432,
   "username": "postgres",
   "password": "postgres",
   "database": "api-cars",
@@ -10,7 +10,7 @@
     "./src/modules/**/typeorm/entities/*.ts"
   ],
   "migrations": [
-    "./src/migrations/*.ts"
+    "./src/shared/typeorm/migrations/*.ts"
   ],
   "cli": {
     "migrationsDir": "./src/typeorm/migrations"
