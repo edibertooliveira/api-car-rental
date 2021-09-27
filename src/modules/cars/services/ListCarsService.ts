@@ -1,11 +1,11 @@
 import { inject, injectable } from 'tsyringe';
 import { ICar } from '../domain/models/ICar';
-import { ICarRepository } from '../domain/repositories/ICarRepository';
+import { ICarsRepository } from '../domain/repositories/ICarsRepository';
 
 @injectable()
 export default class ListCarsService {
-  constructor(@inject('car') private usersRepository: ICarRepository) {}
+  constructor(@inject('car') private carsRepository: ICarsRepository) {}
   public async execute(): Promise<ICar[]> {
-    return this.usersRepository.findAll();
+    return this.carsRepository.findAll();
   }
 }

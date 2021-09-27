@@ -1,11 +1,11 @@
 import { getRepository, Repository } from 'typeorm';
 
 import Car from '../entities/Car';
-import { ICarRepository } from '../../domain/repositories/ICarRepository';
+import { ICarsRepository } from '../../domain/repositories/ICarsRepository';
 import { ICar } from '../../domain/models/ICar';
 import { ICreateCar } from '../../domain/models/ICreateCar';
 
-export default class CarRepository implements ICarRepository {
+export default class CarsRepository implements ICarsRepository {
   private entityRepository: Repository<ICar>;
   constructor() {
     this.entityRepository = getRepository(Car);

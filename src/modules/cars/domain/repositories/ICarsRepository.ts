@@ -1,7 +1,7 @@
 import { ICar } from '../models/ICar';
 import { ICreateCar } from '../models/ICreateCar';
 
-export interface ICarRepository {
+export interface ICarsRepository {
   findByName(name: string): Promise<ICar | undefined>;
   findById(id: string): Promise<ICar | undefined>;
   findAll(): Promise<ICar[]>;

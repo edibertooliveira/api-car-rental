@@ -1,13 +1,13 @@
 import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
-import { ICarRepository } from '../domain/repositories/ICarRepository';
+import { ICarsRepository } from '../domain/repositories/ICarsRepository';
 import { ICreateCar } from '../domain/models/ICreateCar';
 import { ICar } from '../domain/models/ICar';
 
 @injectable()
 export default class CreateCarService {
-  constructor(@inject('car') private carsRepository: ICarRepository) {}
+  constructor(@inject('car') private carsRepository: ICarsRepository) {}
   public async execute({
     name,
     brand,
