@@ -1,9 +1,9 @@
-import {inject, injectable} from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
-import {ICarRepository} from '../domain/repositories/ICarRepository';
-import {ICreateCar} from '../domain/models/ICreateCar';
-import {ICar} from '../domain/models/ICar';
+import { ICarRepository } from '../domain/repositories/ICarRepository';
+import { ICreateCar } from '../domain/models/ICreateCar';
+import { ICar } from '../domain/models/ICar';
 
 @injectable()
 export default class CreateCarService {
