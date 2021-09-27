@@ -9,12 +9,13 @@ createConnection();
 
 const app = express();
 
+app.use(express.json());
+
 app.use(router);
 
 app.get('/ping', async (request: Request, response: Response) => {
   response.status(200).send('pong')
 })
 
-app.use(express.json());
 
 export default app;
