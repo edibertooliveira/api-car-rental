@@ -18,7 +18,7 @@ export default class CreateCarService {
   }: ICreateCar): Promise<ICar> {
     const carExists = await this.carsRepository.findByName(name);
     if (carExists) {
-      throw new ApiError('There is already one car with this name', 409);
+      throw new ApiError('Nome do carro já utilizado', 409);
     }
 
     return this.carsRepository.create({
