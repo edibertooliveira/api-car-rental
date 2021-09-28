@@ -7,6 +7,10 @@ import Car from '../../modules/cars/typeorm/entities/Car';
 export class CarsRepositoryMake implements ICarsRepository {
   private cars: Car[] = [];
 
+  async delete(id: string): Promise<void> {
+    this.cars = this.cars.filter(car => car.id !== id);
+  }
+
   async findAll(): Promise<ICar[]> {
     return this.cars;
   }

@@ -7,6 +7,7 @@ import {
   ListCarsService,
   ShowCarService,
   UpdateCarService,
+  DestroyCarService,
 } from '../../modules/cars/services';
 import { CarsRepositoryMake } from '../mocks/CarsRepositoryMake';
 import ApiError from '@shared/errors/ApiError';
@@ -21,6 +22,14 @@ describe('cars', () => {
       daily_rate: 1000,
       available: true,
       license_plate: '000001',
+    },
+    updateCar: {
+      name: 'any cars 2',
+      brand: 'any brand 2',
+      description: 'any description 2',
+      daily_rate: 1001,
+      available: false,
+      license_plate: '000002',
     },
   };
   describe('CreateCarService', () => {
@@ -138,35 +147,70 @@ describe('cars', () => {
       });
     });
     describe('possivel alterar um carro', () => {
-      test('se o campo "name" não é false', () => {
-        expect(
+      test('se o campo "name" não return false', async () => {
+        await expect(
           updateCarService.execute({ ...car, name: null }),
         ).resolves.not.toHaveProperty('name', null);
       });
-      test('se o campo "brand" não é false', () => {
-        expect(
+      test('se o campo "brand" não return false', async () => {
+        await expect(
           updateCarService.execute({ ...car, brand: null }),
         ).resolves.not.toHaveProperty('brand', null);
       });
-      test('se o campo "description" não é false', () => {
-        expect(
+      test('se o campo "description" não return false', async () => {
+        await expect(
           updateCarService.execute({ ...car, description: null }),
         ).resolves.not.toHaveProperty('description', null);
       });
-      test('se o campo "daily_rate" não é false', () => {
-        expect(
+      test('se o campo "daily_rate" não return false', async () => {
+        await expect(
           updateCarService.execute({ ...car, daily_rate: null }),
         ).resolves.not.toHaveProperty('daily_rate', null);
       });
-      test('se o campo "license_plate" não é false', () => {
-        expect(
+      test('se o campo "license_plate" não return false', async () => {
+        await expect(
           updateCarService.execute({ ...car, license_plate: null }),
         ).resolves.not.toHaveProperty('license_plate', null);
       });
-      test('', () => {
-        expect(
-          updateCarService.execute({ ...car, license_plate: null }),
-        ).resolves.not.toHaveProperty('license_plate', null);
+      test('se atualiza os campos com sucesso', async () => {
+        const result = await updateCarService.execute({
+          id: car.id,
+          ...optional.updateCar,
+        });
+        expect(result).not.toHaveProperty('name', car.name);
+        expect(result).not.toHaveProperty('brand', car.brand);
+        expect(result).not.toHaveProperty('description', car.description);
+        expect(result).not.toHaveProperty('daily_rate', car.daily_rate);
+        expect(result).not.toHaveProperty('license_plate', car.license_plate);
+      });
+    });
+  });
+  describe('DestroyCarService', () => {
+    let destroyCarService: DestroyCarService;
+    let car;
+    beforeEach(async () => {
+      carsRepository = new CarsRepositoryMake();
+      destroyCarService = new DestroyCarService(carsRepository);
+      car = { ...(await carsRepository.create(optional.createCar)) };
+    });
+    describe('impossível buscar um carro', () => {
+      test('Se retorna ApiError message "carro não encontrado", status 404', async () => {
+        try {
+          car.id = '999';
+          await destroyCarService.execute({ id: car.id });
+        } catch (err) {
+          expect(err.message).toEqual('Carro não encontrado');
+          expect(err.statusCode).toEqual(404);
+        }
+      });
+    });
+    describe('possivel deletar um carro', () => {
+      test('se deletar um carro com sucesso', async () => {
+        await destroyCarService.execute({
+          id: car.id,
+        });
+        const result = await carsRepository.findById(car.id);
+        expect(result).not.toBeTruthy();
       });
     });
   });
