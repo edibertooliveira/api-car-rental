@@ -10,6 +10,9 @@ export default class CarsRepository implements ICarsRepository {
   constructor() {
     this.entityRepository = getRepository(Car);
   }
+  public async delete(id: string): Promise<void> {
+    this.entityRepository.delete(id);
+  }
 
   public async findAll(): Promise<ICar[]> {
     return this.entityRepository.find();
