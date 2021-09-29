@@ -1,14 +1,20 @@
 {
   "compilerOptions": {
     "target": "es5",                                
-    "module": "commonjs", 
+    "module": "commonjs",
+    "rootDir": "./src",
     "outDir": "./dist",                          
-    "baseUrl": "./",
+    "baseUrl": "./src",
     "paths": {
-      "@modules/*": ["modules/*"],
-      "@config/*": ["config/*"],
-      "@shared/*": ["shared/*"],
-      "@errors/*": ["errors/*"]
+      "@config/*": [
+        "config/*"
+      ],
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@shared/*": [
+        "shared/*"
+      ]
     },                                 
     "esModuleInterop": true,                        
     "experimentalDecorators": true,              
