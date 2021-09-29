@@ -1,0 +1,337 @@
+{
+  "openapi": "3.0.6",
+  "info": {
+    "title": "api-locadora-de-carros",
+    "description": "Essa API tem como objetivo testar meus conhecimentos, em Back-End. Desenvolvido usando: NodeJS com TypeScript, ExpressJS, banco de dados PostgreSQL, TypeORM.",
+    "contact": {
+      "email": "edibertooliveira@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:3333",
+      "description": "API base"
+    }
+  ],
+  "paths": {
+    "/cars": {
+      "get": {
+        "summary": "Responsável por obter  o registro de carros",
+        "description": "Busca as informações do banco de dados",
+        "operationId": "CarsController.index",
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de carros",
+            "content": {
+              "application/json": {}
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Responsável por alterar o registro do carro",
+        "description": "Modifica as informações do banco de dados do carro",
+        "operationId": "ProfileController.create",
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/request_register"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Carros criado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/create_or_save_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro com a requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Campo com duplicidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cars/id": {
+      "get": {
+        "summary": "Responsável por obter  o registro de carros",
+        "description": "Busca as informações do banco de dados",
+        "operationId": "CarsController.index",
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+
+        "responses": {
+          "200": {
+            "description": "Carro",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Responsável por alterar o registro do carro",
+        "description": "Modifica as informações do banco de dados do carro",
+        "operationId": "ProfileController.update",
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "requestBody": {
+          "description": "Campos opcionais",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/request_register"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Carros Atualizado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/create_or_save_response"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Erro com a requisição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Campo com duplicidade",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Responsável por deletar o registro do carro",
+        "description": "Exclui/Bloqueia as informações do banco de dados do carro",
+        "operationId": "ProfileController.destroy",
+        "tags": [
+          "Cars"
+        ],
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Carro deletado",
+            "content": {
+              "application/json": {}
+            }
+          },
+          "404": {
+            "description": "Não encontrado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/error_api"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "id": {
+        "type": "string",
+        "example": "d90fe958-368e-4eef-8612-f371cf40d04d"
+      },
+      "name": {
+        "type": "string",
+        "example": "KA"
+      },
+      "brand": {
+        "type": "string",
+        "example": "FIAT"
+      },
+      "description": {
+        "type": "string",
+        "example": "Carro nacional"
+      },
+      "daily_rate": {
+        "type": "number",
+        "example": 1000
+      },
+      "available": {
+        "type": "boolean",
+        "example": true
+      },
+      "license_plate": {
+        "type": "string",
+        "example": "0001"
+      },
+      "created_at": {
+        "type": "string",
+        "example": "2021-08-21T18:38:52.207Z"
+      },
+      "request_register": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "brand": {
+            "$ref": "#/components/schemas/brand"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "daily_rate": {
+            "$ref": "#/components/schemas/daily_rate"
+          },
+          "available": {
+            "$ref": "#/components/schemas/available"
+          },
+          "license_plate": {
+            "$ref": "#/components/schemas/license_plate"
+          }
+        }
+      },
+      "create_or_save_response": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "$ref": "#/components/schemas/id"
+          },
+          "name": {
+            "$ref": "#/components/schemas/name"
+          },
+          "brand": {
+            "$ref": "#/components/schemas/brand"
+          },
+          "description": {
+            "$ref": "#/components/schemas/description"
+          },
+          "daily_rate": {
+            "$ref": "#/components/schemas/daily_rate"
+          },
+          "available": {
+            "$ref": "#/components/schemas/available"
+          },
+          "license_plate": {
+            "$ref": "#/components/schemas/license_plate"
+          },
+          "created_at": {
+            "$ref": "#/components/schemas/created_at"
+          }
+        }
+      },
+      "error_api": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
