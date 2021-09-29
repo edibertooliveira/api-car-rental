@@ -1,11 +1,13 @@
 import './container';
 import { Request, Response } from 'express';
 import cors from 'cors';
+import 'express-async-errors';
 import swaggerUI from 'swagger-ui-express';
 import * as OpenApiValidator from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import doc from './api.schema.json';
 import createConnection from './typeorm';
+import errors from './middlewares/errorsApi';
 
 import express from 'express';
 import router from './routes';
@@ -34,5 +36,7 @@ app.use(
 app.get('/ping', async (request: Request, response: Response) => {
   response.status(200).send('pong');
 });
+
+app.use(errors);
 
 export default app;
