@@ -10,7 +10,7 @@
   },
   "servers": [
     {
-      "url": "http://127.0.0.1:3333",
+      "url": "http://127.0.0.1:3333/api/v1",
       "description": "API base"
     }
   ],
@@ -103,7 +103,7 @@
         }
       }
     },
-    "/cars/id": {
+    "/cars/{id}": {
       "get": {
         "summary": "Responsável por obter  o registro de carros",
         "description": "Busca as informações do banco de dados",
@@ -111,12 +111,22 @@
         "tags": [
           "Cars"
         ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "c911ddfc-903e-48d0-8bef-9f2b7ed03688"
+            }
+          }
+        ],
         "security": [
           {
             "bearerAuth": []
           }
         ],
-
         "responses": {
           "200": {
             "description": "Carro",
@@ -146,6 +156,17 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "c911ddfc-903e-48d0-8bef-9f2b7ed03688"
+            }
           }
         ],
         "requestBody": {
@@ -212,6 +233,17 @@
         "security": [
           {
             "bearerAuth": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "c911ddfc-903e-48d0-8bef-9f2b7ed03688"
+            }
           }
         ],
         "responses": {
