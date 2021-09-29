@@ -1,6 +1,10 @@
 import './container';
 import { Request, Response } from 'express';
 import cors from 'cors';
+import swaggerUI from 'swagger-ui-express';
+import * as OpenApiValidator from 'express-openapi-validator';
+import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
+import doc from './api.schema.json';
 import createConnection from './typeorm';
 
 import express from 'express';
@@ -15,6 +19,17 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
+
+app.use(
+  '/docs',
+  swaggerUI.serve,
+  swaggerUI.setup(doc),
+  OpenApiValidator.middleware({
+    apiSpec: doc as unknown as OpenAPIV3.Document,
+    validateRequests: true,
+    validateResponses: true,
+  }),
+);
 
 app.get('/ping', async (request: Request, response: Response) => {
   response.status(200).send('pong');
