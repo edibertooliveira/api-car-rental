@@ -8,6 +8,7 @@ import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import doc from './api.schema.json';
 import createConnection from './typeorm';
 import errors from './middlewares/errorsApi';
+import { expressLogger } from '@config/loggerConfig';
 
 import express from 'express';
 import router from './routes';
@@ -21,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api/v1', router);
+app.use(expressLogger);
 
 app.use(
   '/docs',

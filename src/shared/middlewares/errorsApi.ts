@@ -1,4 +1,5 @@
 import ApiError from '@shared/errors/ApiError';
+import { logger } from '@config/loggerConfig';
 import { NextFunction, Request, Response } from 'express';
 
 export default (
@@ -16,8 +17,7 @@ export default (
     });
   }
 
-  console.log(err);
-
+  logger.error(err.message);
   return res.status(500).json({
     error: {
       name: 'Error',
