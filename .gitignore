@@ -6,6 +6,4 @@ yarn-error.log
 *.iml
 out
 gen
-/coverage/
-/package-lock.json
-/yarn.lock
+coverage

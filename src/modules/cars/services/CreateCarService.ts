@@ -1,13 +1,13 @@
-import {inject, injectable} from 'tsyringe';
+import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
-import {ICarRepository} from '../domain/repositories/ICarRepository';
-import {ICreateCar} from '../domain/models/ICreateCar';
-import {ICar} from '../domain/models/ICar';
+import { ICarsRepository } from '../domain/repositories/ICarsRepository';
+import { ICreateCar } from '../domain/models/ICreateCar';
+import { ICar } from '../domain/models/ICar';
 
 @injectable()
 export default class CreateCarService {
-  constructor(@inject('car') private carsRepository: ICarRepository) {}
+  constructor(@inject('car') private carsRepository: ICarsRepository) {}
   public async execute({
     name,
     brand,
@@ -18,7 +18,7 @@ export default class CreateCarService {
   }: ICreateCar): Promise<ICar> {
     const carExists = await this.carsRepository.findByName(name);
     if (carExists) {
-      throw new ApiError('There is already one car with this name', 409);
+      throw new ApiError('Nome do carro já utilizado', 409);
     }
 
     return this.carsRepository.create({
