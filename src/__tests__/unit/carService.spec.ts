@@ -39,9 +39,9 @@ describe('cars', () => {
       createCarService = new CreateCarService(carsRepository);
     });
 
-    describe('impossível criar um carro', () => {
-      describe('"name" duplicado no banco', () => {
-        test('Se retorna ApiError message "Nome do carro já utilizado", status 409', async () => {
+    describe('impossible to create a car', () => {
+      describe('duplicate "name" in the bank', () => {
+        test('If returns ApiError message "Car name already used", status 409', async () => {
           await createCarService.execute(optional.createCar);
           await expect(() =>
             createCarService.execute(optional.createCar),
@@ -55,8 +55,8 @@ describe('cars', () => {
         });
       });
     });
-    describe('possível criar um carro', () => {
-      test('Se retorna chave "id", "created_at"', async () => {
+    describe('possible to create a car', () => {
+      test('If key returns "id", "created_at"', async () => {
         const response = await createCarService.execute(optional.createCar);
         expect(response).toHaveProperty('id');
         expect(response).toHaveProperty('created_at');
@@ -71,8 +71,8 @@ describe('cars', () => {
       carsRepository = new CarsRepositoryMake();
       listCarsService = new ListCarsService(carsRepository);
     });
-    describe('possível listar carro', () => {
-      test('Se retorna uma lista de carros com sucesso', async () => {
+    describe('possible to list car', () => {
+      test('If a list of cars is returned successfully', async () => {
         const response = await listCarsService.execute();
         expect(response).toBeTruthy();
       });
@@ -87,8 +87,8 @@ describe('cars', () => {
       showCarService = new ShowCarService(carsRepository);
     });
 
-    describe('impossível buscar um carro', () => {
-      test('Se retorna ApiError message "carro não encontrado", status 404', async () => {
+    describe('impossible to get a car', () => {
+      test('If it returns ApiError message "car not found", status 404', async () => {
         try {
           await showCarService.execute({ id: '999' });
         } catch (err) {
@@ -98,8 +98,8 @@ describe('cars', () => {
       });
     });
 
-    describe('possível buscar um carro', () => {
-      test('Se retorna tipo object', async () => {
+    describe('possible to get a car', () => {
+      test('If it returns object type', async () => {
         const car = await carsRepository.create(optional.createCar);
         expect(
           JSON.stringify(await showCarService.execute({ id: car.id })),
@@ -117,8 +117,8 @@ describe('cars', () => {
       updateCarService = new UpdateCarService(carsRepository);
       car = { ...(await carsRepository.create(optional.createCar)) };
     });
-    describe('impossível buscar um carro', () => {
-      test('Se retorna ApiError message "carro não encontrado", status 404', async () => {
+    describe('impossible to get a car', () => {
+      test('If it returns ApiError message "car not found", status 404', async () => {
         try {
           car.id = '999';
           await updateCarService.execute(car);
@@ -129,9 +129,9 @@ describe('cars', () => {
       });
     });
 
-    describe('possivel buscar um carro', () => {
-      describe('"name" duplicado no banco', () => {
-        test('retornar ApiError message "Nome do carro já utilizado", status 409', async () => {
+    describe('it is possible to get a car', () => {
+      describe('duplicate "name" in the bank', () => {
+        test('return ApiError message "Car name already used", status 409', async () => {
           try {
             const car = await carsRepository.create({
               ...optional.createCar,
@@ -146,33 +146,33 @@ describe('cars', () => {
         });
       });
     });
-    describe('possivel alterar um carro', () => {
-      test('se o campo "name" não return false', async () => {
+    describe('it is possible to change a car', () => {
+      test('if the "name" field does not return false', async () => {
         await expect(
           updateCarService.execute({ ...car, name: null }),
         ).resolves.not.toHaveProperty('name', null);
       });
-      test('se o campo "brand" não return false', async () => {
+      test('if the "brand" field does not return false', async () => {
         await expect(
           updateCarService.execute({ ...car, brand: null }),
         ).resolves.not.toHaveProperty('brand', null);
       });
-      test('se o campo "description" não return false', async () => {
+      test('if the "description" field does not return false', async () => {
         await expect(
           updateCarService.execute({ ...car, description: null }),
         ).resolves.not.toHaveProperty('description', null);
       });
-      test('se o campo "daily_rate" não return false', async () => {
+      test('if the "daily_rate" field does not return false', async () => {
         await expect(
           updateCarService.execute({ ...car, daily_rate: null }),
         ).resolves.not.toHaveProperty('daily_rate', null);
       });
-      test('se o campo "license_plate" não return false', async () => {
+      test('if the "license_plate" field does not return false "license_plate"', async () => {
         await expect(
           updateCarService.execute({ ...car, license_plate: null }),
         ).resolves.not.toHaveProperty('license_plate', null);
       });
-      test('se atualiza os campos com sucesso', async () => {
+      test('if fields have been updated successfully', async () => {
         const result = await updateCarService.execute({
           id: car.id,
           ...optional.updateCar,
@@ -193,8 +193,8 @@ describe('cars', () => {
       destroyCarService = new DestroyCarService(carsRepository);
       car = { ...(await carsRepository.create(optional.createCar)) };
     });
-    describe('impossível buscar um carro', () => {
-      test('Se retorna ApiError message "carro não encontrado", status 404', async () => {
+    describe('impossible to get a car', () => {
+      test('If it returns ApiError message "car not found", status 404', async () => {
         try {
           car.id = '999';
           await destroyCarService.execute({ id: car.id });
@@ -204,8 +204,8 @@ describe('cars', () => {
         }
       });
     });
-    describe('possivel deletar um carro', () => {
-      test('se deletar um carro com sucesso', async () => {
+    describe('it is possible to delete a car', () => {
+      test('if you successfully delete a car', async () => {
         await destroyCarService.execute({
           id: car.id,
         });
