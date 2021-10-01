@@ -2,7 +2,7 @@
   "openapi": "3.0.6",
   "info": {
     "title": "api-locadora-de-carros",
-    "description": "Essa API tem como objetivo testar meus conhecimentos, em Back-End. Desenvolvido usando: NodeJS com TypeScript, ExpressJS, banco de dados PostgreSQL, TypeORM.",
+    "description": "This API aims to test my knowledge in Back-End. Developed using: NodeJS with TypeScript, ExpressJS, PostgreSQL database, TypeORM.",
     "contact": {
       "email": "edibertooliveira@gmail.com"
     },
@@ -17,8 +17,8 @@
   "paths": {
     "/cars": {
       "get": {
-        "summary": "Responsável por obter  o registro de carros",
-        "description": "Busca as informações do banco de dados",
+        "summary": "Responsible for obtaining the car registration",
+        "description": "Search the database information",
         "operationId": "CarsController.index",
         "tags": [
           "Cars"
@@ -30,7 +30,7 @@
         ],
         "responses": {
           "200": {
-            "description": "Lista de carros",
+            "description": "Car list",
             "content": {
               "application/json": {}
             }
@@ -38,8 +38,8 @@
         }
       },
       "post": {
-        "summary": "Responsável por alterar o registro do carro",
-        "description": "Modifica as informações do banco de dados do carro",
+        "summary": "Responsible for changing the car registration",
+        "description": "Modify car database information",
         "operationId": "ProfileController.create",
         "tags": [
           "Cars"
@@ -61,7 +61,7 @@
         },
         "responses": {
           "201": {
-            "description": "Carros criado",
+            "description": "cars created",
             "content": {
               "application/json": {
                 "schema": {
@@ -71,7 +71,7 @@
             }
           },
           "400": {
-            "description": "Erro com a requisição",
+            "description": "Error with request",
             "content": {
               "application/json": {
                 "schema": {
@@ -81,7 +81,7 @@
             }
           },
           "409": {
-            "description": "Campo com duplicidade",
+            "description": "Field with duplicity",
             "content": {
               "application/json": {
                 "schema": {
@@ -91,7 +91,7 @@
             }
           },
           "404": {
-            "description": "Não encontrado",
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -105,9 +105,9 @@
     },
     "/cars/{id}": {
       "get": {
-        "summary": "Responsável por obter  o registro de carros",
-        "description": "Busca as informações do banco de dados",
-        "operationId": "CarsController.index",
+        "summary": "Responsible for obtaining the car registration",
+        "description": "Search the database information",
+        "operationId": "CarsController.show",
         "tags": [
           "Cars"
         ],
@@ -129,13 +129,13 @@
         ],
         "responses": {
           "200": {
-            "description": "Carro",
+            "description": "Car",
             "content": {
               "application/json": {}
             }
           },
           "404": {
-            "description": "Não encontrado",
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -147,8 +147,8 @@
         }
       },
       "put": {
-        "summary": "Responsável por alterar o registro do carro",
-        "description": "Modifica as informações do banco de dados do carro",
+        "summary": "Responsible for changing the car registration",
+        "description": "Modify car database information",
         "operationId": "ProfileController.update",
         "tags": [
           "Cars"
@@ -170,7 +170,7 @@
           }
         ],
         "requestBody": {
-          "description": "Campos opcionais",
+          "description": "Optional fields",
           "content": {
             "application/json": {
               "schema": {
@@ -182,7 +182,7 @@
         },
         "responses": {
           "200": {
-            "description": "Carros Atualizado",
+            "description": "Updated Cars",
             "content": {
               "application/json": {
                 "schema": {
@@ -192,7 +192,7 @@
             }
           },
           "400": {
-            "description": "Erro com a requisição",
+            "description": "Error with request",
             "content": {
               "application/json": {
                 "schema": {
@@ -202,7 +202,7 @@
             }
           },
           "409": {
-            "description": "Campo com duplicidade",
+            "description": "Field with duplicity",
             "content": {
               "application/json": {
                 "schema": {
@@ -212,7 +212,7 @@
             }
           },
           "404": {
-            "description": "Não encontrado",
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
@@ -224,8 +224,8 @@
         }
       },
       "delete": {
-        "summary": "Responsável por deletar o registro do carro",
-        "description": "Exclui/Bloqueia as informações do banco de dados do carro",
+        "summary": "Responsible for deleting the car registration",
+        "description": "Delete/Block car database information",
         "operationId": "ProfileController.destroy",
         "tags": [
           "Cars"
@@ -248,13 +248,13 @@
         ],
         "responses": {
           "204": {
-            "description": "Carro deletado",
+            "description": "Car deleted",
             "content": {
               "application/json": {}
             }
           },
           "404": {
-            "description": "Não encontrado",
+            "description": "Not found",
             "content": {
               "application/json": {
                 "schema": {
