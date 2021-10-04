@@ -4,7 +4,7 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ICar } from '../../domain/models/ICar';
+import { ICar } from '../../../dto/ICar';
 
 @Entity('cars')
 export default class Car implements ICar {

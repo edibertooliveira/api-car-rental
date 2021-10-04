@@ -3,7 +3,7 @@ import {
   ShowCarService,
   UpdateCarService,
   DestroyCarService,
-} from '../services';
+} from '@modules/cars/services';
 
 import { container } from 'tsyringe';
 

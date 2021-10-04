@@ -1,7 +1,7 @@
 import { inject, injectable } from 'tsyringe';
-import { ICarsRepository } from '../domain/repositories/ICarsRepository';
+import { ICarsRepository } from '../repositories/ICarsRepository';
 import ApiError from '@shared/errors/ApiError';
-import { IDestroyByCarId } from '../domain/models/IDestroyByCarId';
+import { IDestroyByCarId } from '../dto/IDestroyByCarId';
 
 @injectable()
 export default class DestroyCarService {
