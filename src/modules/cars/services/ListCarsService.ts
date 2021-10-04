@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
-import { ICar } from '../domain/models/ICar';
-import { ICarsRepository } from '../domain/repositories/ICarsRepository';
+import { ICar } from '../dtos/ICar';
+import { ICarsRepository } from '../repositories/ICarsRepository';
 
 @injectable()
 export default class ListCarsService {

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateCarService, ListCarsService } from '../services';
+import { CreateCarService, ListCarsService } from '@modules/cars/services';
 
 import { container } from 'tsyringe';
 

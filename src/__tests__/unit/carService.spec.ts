@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 
 import { describe, test, expect } from '@jest/globals';
-import { ICarsRepository } from '../../modules/cars/domain/repositories/ICarsRepository';
+import { ICarsRepository } from '../../modules/cars/repositories/ICarsRepository';
 import {
   CreateCarService,
   ListCarsService,

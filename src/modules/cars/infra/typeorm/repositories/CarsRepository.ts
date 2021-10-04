@@ -1,8 +1,8 @@
 import { getRepository, Repository } from 'typeorm';
 
 import Car from '../entities/Car';
-import { ICarsRepository } from '../../domain/repositories/ICarsRepository';
-import { ICar } from '../../domain/models/ICar';
+import { ICarsRepository } from '../../../repositories/ICarsRepository';
+import { ICar } from '../../../dtos/ICar';
 import { ICreateCar } from '../../domain/models/ICreateCar';
 
 export default class CarsRepository implements ICarsRepository {
