@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ICarsRepository } from '../../modules/cars/repositories/ICarsRepository';
-import { ICar } from '../../modules/cars/dto/ICar';
+import { ICar } from '../../modules/cars/dtos/ICar';
 import Car from '../../modules/cars/infra/typeorm/entities/Car';
-import { ICreateCar } from '@modules/cars/dto/ICreateCar';
+import { ICreateCar } from '@modules/cars/dtos/ICreateCar';
 
 export class CarsRepositoryMake implements ICarsRepository {
   private cars: Car[] = [];

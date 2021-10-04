@@ -1,5 +1,5 @@
-import { ICar } from '../dto/ICar';
-import { ICreateCar } from '../dto/ICreateCar';
+import { ICar } from '../dtos/ICar';
+import { ICreateCar } from '../dtos/ICreateCar';
 
 export interface ICarsRepository {
   findByName(name: string): Promise<ICar | undefined>;

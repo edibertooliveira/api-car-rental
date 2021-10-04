@@ -1,8 +1,8 @@
 import { inject, injectable } from 'tsyringe';
-import { ICar } from '../dto/ICar';
+import { ICar } from '../dtos/ICar';
 import { ICarsRepository } from '../repositories/ICarsRepository';
 import ApiError from '@shared/errors/ApiError';
-import { IFindByCarId } from '../dto/IFindByCarId';
+import { IFindByCarId } from '../dtos/IFindByCarId';
 
 @injectable()
 export default class ShowCarService {

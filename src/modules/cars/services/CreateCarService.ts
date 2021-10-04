@@ -2,8 +2,8 @@ import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { ICar } from '../dto/ICar';
-import { ICreateCar } from '../dto/ICreateCar';
+import { ICar } from '../dtos/ICar';
+import { ICreateCar } from '../dtos/ICreateCar';
 
 @injectable()
 export default class CreateCarService {

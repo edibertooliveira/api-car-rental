@@ -1,5 +1,5 @@
 import { inject, injectable } from 'tsyringe';
-import { ICar } from '../dto/ICar';
+import { ICar } from '../dtos/ICar';
 import { ICarsRepository } from '../repositories/ICarsRepository';
 
 @injectable()
