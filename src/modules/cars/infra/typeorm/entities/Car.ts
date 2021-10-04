@@ -4,10 +4,9 @@ import {
   Entity,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ICar } from '../../../dtos/ICar';
 
 @Entity('cars')
-export default class Car implements ICar {
+export default class Car {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
