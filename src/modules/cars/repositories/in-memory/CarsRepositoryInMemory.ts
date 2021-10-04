@@ -4,7 +4,7 @@ import Car from '@modules/cars/infra/typeorm/entities/Car';
 import { v4 as uuidv4 } from 'uuid';
 import { ICarsRepository } from '../ICarsRepository';
 
-export class CarsRepositoryMake implements ICarsRepository {
+export class CarsRepositoryInMemory implements ICarsRepository {
   private cars: Car[] = [];
 
   async delete(id: string): Promise<void> {

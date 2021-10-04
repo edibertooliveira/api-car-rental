@@ -2,14 +2,14 @@ import 'reflect-metadata';
 import { describe, test, expect } from '@jest/globals';
 import { ListCarsService } from '.';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { CarsRepositoryMake } from '../repositories/in-memory/CarsRepositoryMake';
+import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 
 describe('ListCarsService', () => {
   let carsRepository: ICarsRepository;
   let listCarsService: ListCarsService;
 
   beforeEach(() => {
-    carsRepository = new CarsRepositoryMake();
+    carsRepository = new CarsRepositoryInMemory();
     listCarsService = new ListCarsService(carsRepository);
   });
   describe('possible to list car', () => {

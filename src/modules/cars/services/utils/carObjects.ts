@@ -1,18 +1,19 @@
+import faker from 'faker';
 export default {
   create: {
-    name: 'any cars',
-    brand: 'any brand',
-    description: 'any description',
-    daily_rate: 1000,
+    name: faker.vehicle.model(),
+    brand: faker.vehicle.manufacturer(),
+    description: faker.lorem.sentence(),
+    daily_rate: Number(faker.finance.amount()),
     available: true,
-    license_plate: '000001',
+    license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
   },
   update: {
-    name: 'any cars 2',
-    brand: 'any brand 2',
-    description: 'any description 2',
-    daily_rate: 1001,
+    name: faker.vehicle.model(),
+    brand: faker.vehicle.manufacturer(),
+    description: faker.lorem.sentence(),
+    daily_rate: Number(faker.finance.amount()),
     available: false,
-    license_plate: '000002',
+    license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
   },
 };

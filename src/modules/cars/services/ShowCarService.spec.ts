@@ -2,26 +2,24 @@ import 'reflect-metadata';
 import { describe, test, expect } from '@jest/globals';
 import { ShowCarService } from '.';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { CarsRepositoryMake } from '../repositories/in-memory/CarsRepositoryMake';
+import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import carObjects from './utils/carObjects';
+import ApiError from '@shared/errors/ApiError';
 
 describe('ShowCarService', () => {
   let carsRepository: ICarsRepository;
   let showCarService: ShowCarService;
 
   beforeEach(() => {
-    carsRepository = new CarsRepositoryMake();
+    carsRepository = new CarsRepositoryInMemory();
     showCarService = new ShowCarService(carsRepository);
   });
 
   describe('impossible to get a car', () => {
     test('If it returns ApiError message "car not found", status 404', async () => {
-      try {
-        await showCarService.execute({ id: '999' });
-      } catch (err) {
-        expect(err.message).toEqual('Carro não encontrado');
-        expect(err.statusCode).toEqual(404);
-      }
+      await expect(() => showCarService.execute({ id: '999' })).rejects.toEqual(
+        new ApiError('Carro não encontrado', 404),
+      );
     });
   });
 

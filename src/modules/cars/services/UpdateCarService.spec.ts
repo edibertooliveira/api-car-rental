@@ -2,9 +2,10 @@ import 'reflect-metadata';
 import { describe, test, expect } from '@jest/globals';
 import { UpdateCarService } from '.';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { CarsRepositoryMake } from '../repositories/in-memory/CarsRepositoryMake';
+import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import carObjects from './utils/carObjects';
 import { ICar } from '../dtos/ICar';
+import ApiError from '@shared/errors/ApiError';
 
 describe('UpdateCarService', () => {
   let carsRepository: ICarsRepository;
@@ -12,36 +13,30 @@ describe('UpdateCarService', () => {
   let car: ICar;
 
   beforeEach(async () => {
-    carsRepository = new CarsRepositoryMake();
+    carsRepository = new CarsRepositoryInMemory();
     updateCarService = new UpdateCarService(carsRepository);
     car = { ...(await carsRepository.create(carObjects.create)) };
   });
 
   describe('impossible to get a car', () => {
     test('If it returns ApiError message "car not found", status 404', async () => {
-      try {
-        car.id = '999';
-        await updateCarService.execute(car);
-      } catch (err) {
-        expect(err.message).toEqual('Carro não encontrado');
-        expect(err.statusCode).toEqual(404);
-      }
+      car.id = '999';
+      await expect(() => updateCarService.execute(car)).rejects.toEqual(
+        new ApiError('Carro não encontrado', 404),
+      );
     });
   });
   describe('it is possible to get a car', () => {
     describe('duplicate "name" in the bank', () => {
       test('return ApiError message "Car name already used", status 409', async () => {
-        try {
-          const car = await carsRepository.create({
-            ...carObjects.create,
-            name: 'any duble',
-          });
-          const newNameCar = { ...car, name: carObjects.create.name };
-          await updateCarService.execute(newNameCar);
-        } catch (err) {
-          expect(err.message).toEqual('Nome do carro já utilizado');
-          expect(err.statusCode).toEqual(409);
-        }
+        const car = await carsRepository.create({
+          ...carObjects.create,
+          name: 'any duble',
+        });
+        const newNameCar = { ...car, name: carObjects.create.name };
+        await expect(() =>
+          updateCarService.execute(newNameCar),
+        ).rejects.toEqual(new ApiError('Nome do carro já utilizado', 409));
       });
     });
   });

@@ -3,7 +3,7 @@ import { describe, test, expect } from '@jest/globals';
 import ApiError from '@shared/errors/ApiError';
 import { CreateCarService } from '.';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { CarsRepositoryMake } from '../repositories/in-memory/CarsRepositoryMake';
+import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import carObjects from './utils/carObjects';
 
 describe('CreateCarService', () => {
@@ -11,7 +11,7 @@ describe('CreateCarService', () => {
   let createCarService: CreateCarService;
 
   beforeEach(() => {
-    carsRepository = new CarsRepositoryMake();
+    carsRepository = new CarsRepositoryInMemory();
     createCarService = new CreateCarService(carsRepository);
   });
 
@@ -22,12 +22,9 @@ describe('CreateCarService', () => {
         await expect(() =>
           createCarService.execute(carObjects.create),
         ).rejects.toBeInstanceOf(ApiError);
-        try {
-          await createCarService.execute(carObjects.create);
-        } catch (err) {
-          expect(err.message).toEqual('Nome do carro já utilizado');
-          expect(err.statusCode).toEqual(409);
-        }
+        await expect(() =>
+          createCarService.execute(carObjects.create),
+        ).rejects.toEqual(new ApiError('Nome do carro já utilizado', 409));
       });
     });
   });
