@@ -3,7 +3,7 @@ import { getRepository, Repository } from 'typeorm';
 import Car from '../entities/Car';
 import { ICarsRepository } from '../../../repositories/ICarsRepository';
 import { ICar } from '../../../dtos/ICar';
-import { ICreateCar } from '../../domain/models/ICreateCar';
+import { ICreateCar } from '@modules/cars/dtos/ICreateCar';
 
 export default class CarsRepository implements ICarsRepository {
   private entityRepository: Repository<ICar>;
