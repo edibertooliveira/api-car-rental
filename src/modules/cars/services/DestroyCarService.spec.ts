@@ -29,7 +29,7 @@ describe('DestroyCarService', () => {
   describe('impossible to get a car', () => {
     test('If it return "car not found" is an instance of "ApiError"', async () => {
       car.id = '999';
-      await expect(() =>
+      await expect(
         destroyCarService.execute({ id: car.id }),
       ).rejects.toBeInstanceOf(ApiError);
     });

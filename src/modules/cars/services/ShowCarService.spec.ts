@@ -26,7 +26,7 @@ describe('ShowCarService', () => {
 
   describe('impossible to get a car', () => {
     test('If it return "car not found" is an instance of "ApiError"', async () => {
-      await expect(() =>
+      await expect(
         showCarService.execute({ id: '999' }),
       ).rejects.toBeInstanceOf(ApiError);
     });

@@ -40,7 +40,7 @@ describe('UpdateCarService', () => {
   describe('impossible to get a car', () => {
     test('If it return "car not found" is an instance of "ApiError"', async () => {
       car.id = '999';
-      await expect(() => updateCarService.execute(car)).rejects.toBeInstanceOf(
+      await expect(updateCarService.execute(car)).rejects.toBeInstanceOf(
         ApiError,
       );
     });
@@ -53,7 +53,7 @@ describe('UpdateCarService', () => {
           name: faker.vehicle.model(),
         });
         const newNameCar = { ...car, name: carObj[0].name };
-        await expect(() =>
+        await expect(
           updateCarService.execute(newNameCar),
         ).rejects.toBeInstanceOf(ApiError);
       });

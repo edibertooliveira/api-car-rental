@@ -28,7 +28,7 @@ describe('CreateCarService', () => {
     describe('duplicate "name" in the bank', () => {
       test('If it return "Car name already used" is an instance of "ApiError"', async () => {
         await createCarService.execute(carCreateObj);
-        await expect(() =>
+        await expect(
           createCarService.execute(carCreateObj),
         ).rejects.toBeInstanceOf(ApiError);
       });
