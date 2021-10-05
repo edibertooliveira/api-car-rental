@@ -1,4 +1,4 @@
-import './container';
+import '../container';
 import { Request, Response } from 'express';
 import cors from 'cors';
 import 'express-async-errors';
@@ -7,11 +7,11 @@ import * as OpenApiValidator from 'express-openapi-validator';
 import { OpenAPIV3 } from 'express-openapi-validator/dist/framework/types';
 import doc from './api.schema.json';
 import createConnection from './typeorm';
-import errors from './middlewares/errorsApi';
+import errors from './http/middlewares/errorsApi';
 import { expressLogger } from '@config/loggerConfig';
 
 import express from 'express';
-import router from './routes';
+import router from './http/routes';
 
 createConnection();
 
