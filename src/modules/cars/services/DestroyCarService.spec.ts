@@ -1,27 +1,37 @@
 import 'reflect-metadata';
+import faker from 'faker';
 import { describe, test, expect } from '@jest/globals';
 import { DestroyCarService } from '.';
-import { ICarsRepository } from '../repositories/ICarsRepository';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
-import carObjects from './utils/carObjects';
 import ApiError from '@shared/errors/ApiError';
 import { ICar } from '../dtos/ICar';
+import { ICreateCar } from '../dtos/ICreateCar';
 
 describe('DestroyCarService', () => {
-  let carsRepository: ICarsRepository;
+  let carsRepositoryInMemory: CarsRepositoryInMemory;
   let destroyCarService: DestroyCarService;
   let car: ICar;
+  let carCreateObj: ICreateCar;
+
   beforeEach(async () => {
-    carsRepository = new CarsRepositoryInMemory();
-    destroyCarService = new DestroyCarService(carsRepository);
-    car = { ...(await carsRepository.create(carObjects.create)) };
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
+    destroyCarService = new DestroyCarService(carsRepositoryInMemory);
+    carCreateObj = {
+      name: faker.vehicle.model(),
+      brand: faker.vehicle.manufacturer(),
+      description: faker.lorem.sentence(),
+      daily_rate: Number(faker.finance.amount()),
+      available: true,
+      license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+    } as ICreateCar;
+    car = { ...(await carsRepositoryInMemory.create(carCreateObj)) };
   });
   describe('impossible to get a car', () => {
-    test('If it returns ApiError message "car not found", status 404', async () => {
+    test('If it return "car not found" is an instance of "ApiError"', async () => {
       car.id = '999';
       await expect(() =>
         destroyCarService.execute({ id: car.id }),
-      ).rejects.toEqual(new ApiError('Carro não encontrado', 404));
+      ).rejects.toBeInstanceOf(ApiError);
     });
   });
   describe('it is possible to delete a car', () => {
@@ -29,7 +39,7 @@ describe('DestroyCarService', () => {
       await destroyCarService.execute({
         id: car.id,
       });
-      const result = await carsRepository.findById(car.id);
+      const result = await carsRepositoryInMemory.findById(car.id);
       expect(result).not.toBeTruthy();
     });
   });

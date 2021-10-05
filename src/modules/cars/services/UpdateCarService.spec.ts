@@ -1,42 +1,61 @@
 import 'reflect-metadata';
+import faker from 'faker';
 import { describe, test, expect } from '@jest/globals';
 import { UpdateCarService } from '.';
-import { ICarsRepository } from '../repositories/ICarsRepository';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
-import carObjects from './utils/carObjects';
 import { ICar } from '../dtos/ICar';
 import ApiError from '@shared/errors/ApiError';
+import { ICreateCar } from '../dtos/ICreateCar';
 
 describe('UpdateCarService', () => {
-  let carsRepository: ICarsRepository;
+  let carsRepositoryInMemory: CarsRepositoryInMemory;
   let updateCarService: UpdateCarService;
   let car: ICar;
+  let carObj: ICreateCar[];
 
   beforeEach(async () => {
-    carsRepository = new CarsRepositoryInMemory();
-    updateCarService = new UpdateCarService(carsRepository);
-    car = { ...(await carsRepository.create(carObjects.create)) };
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
+    updateCarService = new UpdateCarService(carsRepositoryInMemory);
+    carObj = [
+      {
+        name: faker.vehicle.model(),
+        brand: faker.vehicle.manufacturer(),
+        description: faker.lorem.sentence(),
+        daily_rate: Number(faker.finance.amount()),
+        available: true,
+        license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+      } as ICreateCar,
+      {
+        name: faker.vehicle.model(),
+        brand: faker.vehicle.manufacturer(),
+        description: faker.lorem.sentence(),
+        daily_rate: Number(faker.finance.amount()),
+        available: false,
+        license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+      } as ICreateCar,
+    ];
+    car = { ...(await carsRepositoryInMemory.create(carObj[0])) };
   });
 
   describe('impossible to get a car', () => {
-    test('If it returns ApiError message "car not found", status 404', async () => {
+    test('If it return "car not found" is an instance of "ApiError"', async () => {
       car.id = '999';
-      await expect(() => updateCarService.execute(car)).rejects.toEqual(
-        new ApiError('Carro não encontrado', 404),
+      await expect(() => updateCarService.execute(car)).rejects.toBeInstanceOf(
+        ApiError,
       );
     });
   });
   describe('it is possible to get a car', () => {
     describe('duplicate "name" in the bank', () => {
-      test('return ApiError message "Car name already used", status 409', async () => {
-        const car = await carsRepository.create({
-          ...carObjects.create,
-          name: 'any duble',
+      test('If it return "Car name already used" is an instance of "ApiError"', async () => {
+        const car = await carsRepositoryInMemory.create({
+          ...carObj[0],
+          name: faker.vehicle.model(),
         });
-        const newNameCar = { ...car, name: carObjects.create.name };
+        const newNameCar = { ...car, name: carObj[0].name };
         await expect(() =>
           updateCarService.execute(newNameCar),
-        ).rejects.toEqual(new ApiError('Nome do carro já utilizado', 409));
+        ).rejects.toBeInstanceOf(ApiError);
       });
     });
   });
@@ -69,7 +88,7 @@ describe('UpdateCarService', () => {
     test('if fields have been updated successfully', async () => {
       const result = await updateCarService.execute({
         id: car.id,
-        ...carObjects.update,
+        ...carObj[1],
       });
       expect(result).not.toHaveProperty('name', car.name);
       expect(result).not.toHaveProperty('brand', car.brand);

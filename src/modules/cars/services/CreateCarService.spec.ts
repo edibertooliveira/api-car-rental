@@ -1,36 +1,42 @@
 import 'reflect-metadata';
+import faker from 'faker';
 import { describe, test, expect } from '@jest/globals';
 import ApiError from '@shared/errors/ApiError';
 import { CreateCarService } from '.';
-import { ICarsRepository } from '../repositories/ICarsRepository';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
-import carObjects from './utils/carObjects';
+import { ICreateCar } from '../dtos/ICreateCar';
 
 describe('CreateCarService', () => {
-  let carsRepository: ICarsRepository;
+  let carsRepositoryInMemory: CarsRepositoryInMemory;
   let createCarService: CreateCarService;
+  let carCreateObj: ICreateCar;
 
   beforeEach(() => {
-    carsRepository = new CarsRepositoryInMemory();
-    createCarService = new CreateCarService(carsRepository);
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
+    createCarService = new CreateCarService(carsRepositoryInMemory);
+    carCreateObj = {
+      name: faker.vehicle.model(),
+      brand: faker.vehicle.manufacturer(),
+      description: faker.lorem.sentence(),
+      daily_rate: Number(faker.finance.amount()),
+      available: true,
+      license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+    } as ICreateCar;
   });
 
   describe('impossible to create a car', () => {
     describe('duplicate "name" in the bank', () => {
-      test('If returns ApiError message "Car name already used", status 409', async () => {
-        await createCarService.execute(carObjects.create);
+      test('If it return "Car name already used" is an instance of "ApiError"', async () => {
+        await createCarService.execute(carCreateObj);
         await expect(() =>
-          createCarService.execute(carObjects.create),
+          createCarService.execute(carCreateObj),
         ).rejects.toBeInstanceOf(ApiError);
-        await expect(() =>
-          createCarService.execute(carObjects.create),
-        ).rejects.toEqual(new ApiError('Nome do carro já utilizado', 409));
       });
     });
   });
   describe('possible to create a car', () => {
     test('If key returns "id", "created_at"', async () => {
-      const response = await createCarService.execute(carObjects.create);
+      const response = await createCarService.execute(carCreateObj);
       expect(response).toHaveProperty('id');
       expect(response).toHaveProperty('created_at');
     });
