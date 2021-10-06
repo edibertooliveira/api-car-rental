@@ -5,10 +5,11 @@ import { container } from 'tsyringe';
 
 export default class CarsController {
   public async create(request: Request, response: Response): Promise<Response> {
-    const { name } = request.body;
+    const { name, description } = request.body;
     const createUser = container.resolve(CreateCategoryService);
     const car = await createUser.execute({
       name,
+      description,
     });
     return response.status(201).json(car);
   }
