@@ -1,6 +1,7 @@
 import ApiError from '@shared/errors/ApiError';
 import { logger } from '@config/loggerConfig';
 import { NextFunction, Request, Response } from 'express';
+import { StatusCodes } from 'http-status-codes';
 
 export default (
   err: Error,
@@ -18,7 +19,7 @@ export default (
   }
 
   logger.error(err.message);
-  return res.status(500).json({
+  return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
     error: {
       name: 'Error',
       message: 'Internal server error',

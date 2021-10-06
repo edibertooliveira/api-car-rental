@@ -4,6 +4,7 @@ import { inject, injectable } from 'tsyringe';
 import { ICreateCategory } from '../dtos/ICreateCategory';
 import Category from '../infra/typeorm/entities/Category';
 import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
+import { StatusCodes } from 'http-status-codes';
 
 @injectable()
 export default class CreateCategoryService {
@@ -16,7 +17,7 @@ export default class CreateCategoryService {
   }: ICreateCategory): Promise<Category> {
     const nameExists = await this.categoriesRepository.findByName(name);
     if (nameExists) {
-      throw new ApiError('Nome da categoria já existe', 409);
+      throw new ApiError('Name of car already used', StatusCodes.CONFLICT);
     }
     return this.categoriesRepository.create({
       name,

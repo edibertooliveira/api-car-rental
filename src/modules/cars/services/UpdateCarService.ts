@@ -4,6 +4,7 @@ import ApiError from '../../../shared/errors/ApiError';
 import { ICarsRepository } from '../repositories/ICarsRepository';
 import { IUpdateCar } from '../dtos/IUpdateCar';
 import Car from '../infra/typeorm/entities/Car';
+import { StatusCodes } from 'http-status-codes';
 
 @injectable()
 export default class UpdateCarService {
@@ -18,10 +19,10 @@ export default class UpdateCarService {
     license_plate,
   }: IUpdateCar): Promise<Car> {
     const carExists = await this.carsRepository.findById(id);
-    if (!carExists) throw new ApiError('Carro não encontrado', 404);
+    if (!carExists) throw new ApiError('Car not found', StatusCodes.NOT_FOUND);
     const carNameExists = await this.carsRepository.findByName(name);
     if (carNameExists && carNameExists.id !== id)
-      throw new ApiError('Nome do carro já utilizado', 409);
+      throw new ApiError('Name of car already used', StatusCodes.CONFLICT);
 
     if (name) carExists.name = name;
     if (brand) carExists.brand = brand;
