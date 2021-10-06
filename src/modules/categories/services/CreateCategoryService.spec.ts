@@ -18,6 +18,7 @@ describe('CreateCategoryService', () => {
     );
     category = {
       name: faker.vehicle.model(),
+      description: faker.lorem.sentence(),
     } as ICreateCategory;
   });
 

@@ -10,13 +10,17 @@ export default class CreateCategoryService {
   constructor(
     @inject('category') private categoriesRepository: ICategoriesRepository,
   ) {}
-  public async execute({ name }: ICreateCategory): Promise<ICategory> {
+  public async execute({
+    name,
+    description,
+  }: ICreateCategory): Promise<ICategory> {
     const nameExists = await this.categoriesRepository.findByName(name);
     if (nameExists) {
       throw new ApiError('Nome da categoria já existe', 409);
     }
     return this.categoriesRepository.create({
       name,
+      description,
     });
   }
 }
