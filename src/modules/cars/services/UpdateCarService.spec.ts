@@ -3,25 +3,35 @@ import faker from 'faker';
 import { describe, test, expect } from '@jest/globals';
 import { UpdateCarService } from '.';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
-import { ICar } from '../dtos/ICar';
 import ApiError from '@shared/errors/ApiError';
 import { ICreateCar } from '../dtos/ICreateCar';
+import Car from '../infra/typeorm/entities/Car';
+import CategoriesRepositoryInMemory from '@modules/categories/repositories/in-memory/CategoriesRepositoryInMemory';
 
 describe('UpdateCarService', () => {
   let carsRepositoryInMemory: CarsRepositoryInMemory;
   let updateCarService: UpdateCarService;
-  let car: ICar;
+  let car: Car;
   let carObj: ICreateCar[];
+  let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
 
   beforeEach(async () => {
+    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
     carsRepositoryInMemory = new CarsRepositoryInMemory();
     updateCarService = new UpdateCarService(carsRepositoryInMemory);
+
+    const category = await categoriesRepositoryInMemory.create({
+      name: faker.vehicle.model(),
+      description: faker.lorem.sentence(),
+    });
+
     carObj = [
       {
         name: faker.vehicle.model(),
         brand: faker.vehicle.manufacturer(),
         description: faker.lorem.sentence(),
         daily_rate: Number(faker.finance.amount()),
+        category_id: category.id,
         available: true,
         license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
       } as ICreateCar,
@@ -30,6 +40,7 @@ describe('UpdateCarService', () => {
         brand: faker.vehicle.manufacturer(),
         description: faker.lorem.sentence(),
         daily_rate: Number(faker.finance.amount()),
+        category_id: category.id,
         available: false,
         license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
       } as ICreateCar,

@@ -5,19 +5,29 @@ import { ShowCarService } from '.';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import ApiError from '@shared/errors/ApiError';
 import { ICreateCar } from '../dtos/ICreateCar';
+import CategoriesRepositoryInMemory from '@modules/categories/repositories/in-memory/CategoriesRepositoryInMemory';
 
 describe('ShowCarService', () => {
   let carsRepositoryInMemory: CarsRepositoryInMemory;
   let showCarService: ShowCarService;
   let carCreateObj: ICreateCar;
+  let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
     carsRepositoryInMemory = new CarsRepositoryInMemory();
     showCarService = new ShowCarService(carsRepositoryInMemory);
+
+    const category = await categoriesRepositoryInMemory.create({
+      name: faker.vehicle.model(),
+      description: faker.lorem.sentence(),
+    });
+
     carCreateObj = {
       name: faker.vehicle.model(),
       brand: faker.vehicle.manufacturer(),
       description: faker.lorem.sentence(),
+      category_id: category.id,
       daily_rate: Number(faker.finance.amount()),
       available: true,
       license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,

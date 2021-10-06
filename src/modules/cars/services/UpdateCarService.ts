@@ -2,8 +2,8 @@ import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { ICar } from '../dtos/ICar';
 import { IUpdateCar } from '../dtos/IUpdateCar';
+import Car from '../infra/typeorm/entities/Car';
 
 @injectable()
 export default class UpdateCarService {
@@ -16,7 +16,7 @@ export default class UpdateCarService {
     daily_rate,
     available,
     license_plate,
-  }: IUpdateCar): Promise<ICar> {
+  }: IUpdateCar): Promise<Car> {
     const carExists = await this.carsRepository.findById(id);
     if (!carExists) throw new ApiError('Carro não encontrado', 404);
     const carNameExists = await this.carsRepository.findByName(name);

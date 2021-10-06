@@ -40,7 +40,7 @@ export class createCar1632164158811 implements MigrationInterface {
           },
           {
             name: 'category_id',
-            type: 'int',
+            type: 'uuid',
           },
           {
             name: 'created_at',
