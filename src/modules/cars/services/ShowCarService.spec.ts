@@ -27,10 +27,10 @@ describe('ShowCarService', () => {
       name: faker.vehicle.model(),
       brand: faker.vehicle.manufacturer(),
       description: faker.lorem.sentence(),
-      category_id: category.id,
-      daily_rate: Number(faker.finance.amount()),
+      categoryId: category.id,
+      dailyRate: Number(faker.finance.amount()),
       available: true,
-      license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+      licensePlate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
     } as ICreateCar;
   });
 

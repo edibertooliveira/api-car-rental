@@ -17,15 +17,13 @@ export default class CreateCarService {
     name,
     brand,
     description,
-    daily_rate,
+    dailyRate,
     available,
-    category_id,
-    license_plate,
+    categoryId,
+    licensePlate,
   }: ICreateCar): Promise<Car> {
     const carExists = await this.carsRepository.findByName(name);
-    const categoryExists = await this.categoriesRepository.findById(
-      category_id,
-    );
+    const categoryExists = await this.categoriesRepository.findById(categoryId);
     if (!categoryExists) {
       throw new ApiError('Category not found', StatusCodes.NOT_FOUND);
     }
@@ -36,10 +34,10 @@ export default class CreateCarService {
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      category_id,
-      license_plate,
+      categoryId,
+      licensePlate,
     });
   }
 }

@@ -30,10 +30,10 @@ describe('CreateCarService', () => {
       name: faker.vehicle.model(),
       brand: faker.vehicle.manufacturer(),
       description: faker.lorem.sentence(),
-      daily_rate: Number(faker.finance.amount()),
-      category_id: category.id,
+      dailyRate: Number(faker.finance.amount()),
+      categoryId: category.id,
       available: true,
-      license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+      licensePlate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
     };
   });
 
@@ -46,7 +46,7 @@ describe('CreateCarService', () => {
         ).rejects.toBeInstanceOf(ApiError);
       });
       test('If it return "Category not found" is an instance of "ApiError"', async () => {
-        carCreateObj.category_id = '999';
+        carCreateObj.categoryId = '999';
         await expect(
           createCarService.execute(carCreateObj),
         ).rejects.toBeInstanceOf(ApiError);

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { CreateCarService, ListCarsService } from '@modules/cars/services';
+import { StatusCodes } from 'http-status-codes';
 
 import { container } from 'tsyringe';
 
@@ -7,7 +8,7 @@ export default class CarsController {
   public async index(_request: Request, response: Response): Promise<Response> {
     const listCars = container.resolve(ListCarsService);
     const cars = await listCars.execute();
-    return response.status(200).json(cars);
+    return response.status(StatusCodes.ACCEPTED).json(cars);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
@@ -15,10 +16,10 @@ export default class CarsController {
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      category_id,
-      license_plate,
+      categoryId,
+      licensePlate,
     } = request.body;
 
     const createUser = container.resolve(CreateCarService);
@@ -26,11 +27,11 @@ export default class CarsController {
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      license_plate,
-      category_id,
+      licensePlate,
+      categoryId,
     });
-    return response.status(201).json(car);
+    return response.status(StatusCodes.CREATED).json(car);
   }
 }

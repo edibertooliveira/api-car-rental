@@ -1,5 +1,4 @@
-import Category from '../../../../categories/infra/typeorm/entities/Category';
-
+import Category from '@modules/categories/infra/typeorm/entities/Category';
 import {
   Column,
   CreateDateColumn,
@@ -23,17 +22,17 @@ export default class Car {
   @Column()
   description: string;
 
-  @Column()
-  daily_rate: number;
+  @Column({ name: 'daily_rate' })
+  dailyRate: number;
 
   @Column()
   available: boolean;
 
-  @Column()
-  license_plate: string;
+  @Column({ name: 'license_plate' })
+  licensePlate: string;
 
-  @Column()
-  category_id: string;
+  @Column({ name: 'category_id' })
+  categoryId: string;
 
   @ManyToOne(() => Category, category => category.id)
   @JoinColumn({ name: 'category_id' })

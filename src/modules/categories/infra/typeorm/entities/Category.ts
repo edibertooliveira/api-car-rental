@@ -21,6 +21,6 @@ export default class Category {
   @CreateDateColumn()
   created_at: Date;
 
-  @OneToMany(() => Car, car => car.category_id)
+  @OneToMany(() => Car, car => car.categoryId)
   cars: Car[];
 }
