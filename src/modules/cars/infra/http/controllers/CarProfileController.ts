@@ -12,7 +12,7 @@ export default class CarsController {
   public async show(request: Request, response: Response): Promise<Response> {
     const listCars = container.resolve(ShowCarService);
     const car = await listCars.execute({ id: request.params.id });
-    return response.status(StatusCodes.ACCEPTED).json(car);
+    return response.status(StatusCodes.OK).json(car);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
@@ -36,7 +36,7 @@ export default class CarsController {
       categoryId,
       licensePlate,
     });
-    return response.status(StatusCodes.ACCEPTED).json(car);
+    return response.status(StatusCodes.OK).json(car);
   }
 
   public async destroy(

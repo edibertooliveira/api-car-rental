@@ -36,7 +36,7 @@ app.use(
 );
 
 app.get('/ping', async (request: Request, response: Response) => {
-  response.status(StatusCodes.ACCEPTED).send('pong');
+  response.status(StatusCodes.OK).send('pong');
 });
 
 app.use(errorsApi);

@@ -8,7 +8,7 @@ export default class CarsController {
   public async index(_request: Request, response: Response): Promise<Response> {
     const listCars = container.resolve(ListCarsService);
     const cars = await listCars.execute();
-    return response.status(StatusCodes.ACCEPTED).json(cars);
+    return response.status(StatusCodes.OK).json(cars);
   }
 
   public async create(request: Request, response: Response): Promise<Response> {
