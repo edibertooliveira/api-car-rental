@@ -1,7 +1,9 @@
+import Car from '@modules/cars/infra/typeorm/entities/Car';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -18,4 +20,7 @@ export default class Category {
 
   @CreateDateColumn()
   created_at: Date;
+
+  @OneToMany(() => Car, car => car.category_id)
+  cars: Car[];
 }

@@ -1,4 +1,5 @@
-import Category from '@modules/categories/infra/typeorm/entities/Category';
+import Category from '../../../../categories/infra/typeorm/entities/Category';
+
 import {
   Column,
   CreateDateColumn,
@@ -34,7 +35,7 @@ export default class Car {
   @Column()
   category_id: string;
 
-  @ManyToOne(() => Category)
+  @ManyToOne(() => Category, category => category.id)
   @JoinColumn({ name: 'category_id' })
   category: Category;
 

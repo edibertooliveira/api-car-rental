@@ -9,6 +9,10 @@ export default class CategoriesRepository implements ICategoriesRepository {
   constructor() {
     this.entityRepository = getRepository(Category);
   }
+
+  findById(id: string): Promise<Category> {
+    return this.entityRepository.findOne(id);
+  }
   public async findByName(name: string): Promise<Category> {
     return this.entityRepository.findOne({
       where: {

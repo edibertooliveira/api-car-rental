@@ -15,8 +15,15 @@ export default class CarsController {
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { name, brand, description, daily_rate, available, license_plate } =
-      request.body;
+    const {
+      name,
+      brand,
+      description,
+      daily_rate,
+      available,
+      category_id,
+      license_plate,
+    } = request.body;
     const updateUser = container.resolve(UpdateCarService);
     const car = await updateUser.execute({
       id: request.params.id,
@@ -25,6 +32,7 @@ export default class CarsController {
       description,
       daily_rate,
       available,
+      category_id,
       license_plate,
     });
     return response.status(200).json(car);
