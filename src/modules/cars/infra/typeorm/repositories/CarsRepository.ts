@@ -14,7 +14,9 @@ export default class CarsRepository implements ICarsRepository {
   }
 
   public async findAll(): Promise<Car[]> {
-    return this.entityRepository.find();
+    return this.entityRepository.find({
+      relations: ['category'],
+    });
   }
   public async findByName(name: string): Promise<Car> {
     return this.entityRepository.findOne({
@@ -24,7 +26,9 @@ export default class CarsRepository implements ICarsRepository {
     });
   }
   public async findById(id: string): Promise<Car> {
-    return this.entityRepository.findOne(id);
+    return this.entityRepository.findOne(id, {
+      relations: ['category'],
+    });
   }
   public async create({
     name,
@@ -32,6 +36,7 @@ export default class CarsRepository implements ICarsRepository {
     description,
     daily_rate,
     available,
+    category_id,
     license_plate,
   }: ICreateCar): Promise<Car> {
     const car = this.entityRepository.create({
@@ -40,6 +45,7 @@ export default class CarsRepository implements ICarsRepository {
       description,
       daily_rate,
       available,
+      category_id,
       license_plate,
     });
 

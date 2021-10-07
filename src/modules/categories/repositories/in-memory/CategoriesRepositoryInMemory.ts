@@ -8,6 +8,10 @@ export default class CategoriesRepositoryInMemory
 {
   private categories: Category[] = [];
 
+  async findById(id: string): Promise<Category | undefined> {
+    return this.categories.find(category => category.id === id);
+  }
+
   async findByName(name: string): Promise<Category | undefined> {
     return this.categories.find(category => category.name === name);
   }

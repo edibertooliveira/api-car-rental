@@ -14,9 +14,12 @@ describe('CreateCarService', () => {
   let carCreateObj: ICreateCar;
 
   beforeEach(async () => {
-    carsRepositoryInMemory = new CarsRepositoryInMemory();
-    createCarService = new CreateCarService(carsRepositoryInMemory);
     categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
+    carsRepositoryInMemory = new CarsRepositoryInMemory();
+    createCarService = new CreateCarService(
+      carsRepositoryInMemory,
+      categoriesRepositoryInMemory,
+    );
 
     const category = await categoriesRepositoryInMemory.create({
       name: faker.vehicle.model(),
@@ -38,6 +41,12 @@ describe('CreateCarService', () => {
     describe('duplicate "name" in the bank', () => {
       test('If it return "Car name already used" is an instance of "ApiError"', async () => {
         await createCarService.execute(carCreateObj);
+        await expect(
+          createCarService.execute(carCreateObj),
+        ).rejects.toBeInstanceOf(ApiError);
+      });
+      test('If it return "Category not found" is an instance of "ApiError"', async () => {
+        carCreateObj.category_id = '999';
         await expect(
           createCarService.execute(carCreateObj),
         ).rejects.toBeInstanceOf(ApiError);

@@ -18,7 +18,10 @@ describe('UpdateCarService', () => {
   beforeEach(async () => {
     categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
     carsRepositoryInMemory = new CarsRepositoryInMemory();
-    updateCarService = new UpdateCarService(carsRepositoryInMemory);
+    updateCarService = new UpdateCarService(
+      carsRepositoryInMemory,
+      categoriesRepositoryInMemory,
+    );
 
     const category = await categoriesRepositoryInMemory.create({
       name: faker.vehicle.model(),
@@ -69,6 +72,12 @@ describe('UpdateCarService', () => {
         ).rejects.toBeInstanceOf(ApiError);
       });
     });
+    test('If it return "Category not found" is an instance of "ApiError"', async () => {
+      car.category_id = '999';
+      await expect(updateCarService.execute(car)).rejects.toBeInstanceOf(
+        ApiError,
+      );
+    });
   });
   describe('it is possible to change a car', () => {
     test('if the "name" field does not return false', async () => {
@@ -91,20 +100,31 @@ describe('UpdateCarService', () => {
         updateCarService.execute({ ...car, daily_rate: null }),
       ).resolves.not.toHaveProperty('daily_rate', null);
     });
+    test('if the "category_id" field does not return false', async () => {
+      await expect(
+        updateCarService.execute({ ...car, category_id: null }),
+      ).resolves.not.toHaveProperty('category_id', null);
+    });
     test('if the "license_plate" field does not return false "license_plate"', async () => {
       await expect(
         updateCarService.execute({ ...car, license_plate: null }),
       ).resolves.not.toHaveProperty('license_plate', null);
     });
     test('if fields have been updated successfully', async () => {
+      const category = await categoriesRepositoryInMemory.create({
+        name: faker.vehicle.model(),
+        description: faker.lorem.sentence(),
+      });
       const result = await updateCarService.execute({
         id: car.id,
         ...carObj[1],
+        category_id: category.id,
       });
       expect(result).not.toHaveProperty('name', car.name);
       expect(result).not.toHaveProperty('brand', car.brand);
       expect(result).not.toHaveProperty('description', car.description);
       expect(result).not.toHaveProperty('daily_rate', car.daily_rate);
+      expect(result).not.toHaveProperty('category_id', car.category_id);
       expect(result).not.toHaveProperty('license_plate', car.license_plate);
     });
   });
