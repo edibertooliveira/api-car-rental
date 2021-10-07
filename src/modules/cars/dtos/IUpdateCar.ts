@@ -3,7 +3,8 @@ export interface IUpdateCar {
   name: string;
   brand: string;
   description: string;
-  daily_rate: number;
+  dailyRate: number;
+  categoryId: string;
   available: boolean;
-  license_plate: string;
+  licensePlate: string;
 }

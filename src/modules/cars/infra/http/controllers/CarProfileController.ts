@@ -6,28 +6,37 @@ import {
 } from '@modules/cars/services';
 
 import { container } from 'tsyringe';
+import { StatusCodes } from 'http-status-codes';
 
 export default class CarsController {
   public async show(request: Request, response: Response): Promise<Response> {
     const listCars = container.resolve(ShowCarService);
     const car = await listCars.execute({ id: request.params.id });
-    return response.status(200).json(car);
+    return response.status(StatusCodes.OK).json(car);
   }
 
   public async update(request: Request, response: Response): Promise<Response> {
-    const { name, brand, description, daily_rate, available, license_plate } =
-      request.body;
+    const {
+      name,
+      brand,
+      description,
+      dailyRate,
+      available,
+      categoryId,
+      licensePlate,
+    } = request.body;
     const updateUser = container.resolve(UpdateCarService);
     const car = await updateUser.execute({
       id: request.params.id,
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      license_plate,
+      categoryId,
+      licensePlate,
     });
-    return response.status(200).json(car);
+    return response.status(StatusCodes.OK).json(car);
   }
 
   public async destroy(
@@ -38,6 +47,6 @@ export default class CarsController {
     await destroyCar.execute({
       id: request.params.id,
     });
-    return response.status(204).json({});
+    return response.status(StatusCodes.NO_CONTENT).json({});
   }
 }

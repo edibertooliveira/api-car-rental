@@ -2,11 +2,10 @@ import { getRepository, Repository } from 'typeorm';
 
 import Car from '../entities/Car';
 import { ICarsRepository } from '../../../repositories/ICarsRepository';
-import { ICar } from '../../../dtos/ICar';
 import { ICreateCar } from '@modules/cars/dtos/ICreateCar';
 
 export default class CarsRepository implements ICarsRepository {
-  private entityRepository: Repository<ICar>;
+  private entityRepository: Repository<Car>;
   constructor() {
     this.entityRepository = getRepository(Car);
   }
@@ -14,39 +13,45 @@ export default class CarsRepository implements ICarsRepository {
     this.entityRepository.delete(id);
   }
 
-  public async findAll(): Promise<ICar[]> {
-    return this.entityRepository.find();
+  public async findAll(): Promise<Car[]> {
+    return this.entityRepository.find({
+      relations: ['category'],
+    });
   }
-  public async findByName(name: string): Promise<ICar> {
+  public async findByName(name: string): Promise<Car> {
     return this.entityRepository.findOne({
       where: {
         name,
       },
     });
   }
-  public async findById(id: string): Promise<ICar> {
-    return this.entityRepository.findOne(id);
+  public async findById(id: string): Promise<Car> {
+    return this.entityRepository.findOne(id, {
+      relations: ['category'],
+    });
   }
   public async create({
     name,
     brand,
     description,
-    daily_rate,
+    dailyRate,
     available,
-    license_plate,
-  }: ICreateCar): Promise<ICar> {
+    categoryId,
+    licensePlate,
+  }: ICreateCar): Promise<Car> {
     const car = this.entityRepository.create({
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      license_plate,
+      categoryId,
+      licensePlate,
     });
 
     return this.entityRepository.save(car);
   }
-  public async save(car: ICar): Promise<ICar> {
+  public async save(car: Car): Promise<Car> {
     return this.entityRepository.save(car);
   }
 }

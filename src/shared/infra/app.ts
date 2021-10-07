@@ -9,7 +9,7 @@ import doc from './api.schema.json';
 import createConnection from './typeorm';
 import errorsApi from './http/middlewares/errorsApi';
 import { expressLogger } from '@config/loggerConfig';
-
+import { StatusCodes } from 'http-status-codes';
 import express from 'express';
 import router from './http/routes';
 
@@ -36,7 +36,7 @@ app.use(
 );
 
 app.get('/ping', async (request: Request, response: Response) => {
-  response.status(200).send('pong');
+  response.status(StatusCodes.OK).send('pong');
 });
 
 app.use(errorsApi);

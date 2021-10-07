@@ -285,7 +285,7 @@
         "type": "string",
         "example": "Carro nacional"
       },
-      "daily_rate": {
+      "dailyRate": {
         "type": "number",
         "example": 1000
       },
@@ -293,7 +293,7 @@
         "type": "boolean",
         "example": true
       },
-      "license_plate": {
+      "licensePlate": {
         "type": "string",
         "example": "0001"
       },
@@ -313,14 +313,14 @@
           "description": {
             "$ref": "#/components/schemas/description"
           },
-          "daily_rate": {
-            "$ref": "#/components/schemas/daily_rate"
+          "dailyRate": {
+            "$ref": "#/components/schemas/dailyRate"
           },
           "available": {
             "$ref": "#/components/schemas/available"
           },
-          "license_plate": {
-            "$ref": "#/components/schemas/license_plate"
+          "licensePlate": {
+            "$ref": "#/components/schemas/licensePlate"
           }
         }
       },
@@ -339,14 +339,14 @@
           "description": {
             "$ref": "#/components/schemas/description"
           },
-          "daily_rate": {
-            "$ref": "#/components/schemas/daily_rate"
+          "dailyRate": {
+            "$ref": "#/components/schemas/dailyRate"
           },
           "available": {
             "$ref": "#/components/schemas/available"
           },
-          "license_plate": {
-            "$ref": "#/components/schemas/license_plate"
+          "licensePlate": {
+            "$ref": "#/components/schemas/licensePlate"
           },
           "created_at": {
             "$ref": "#/components/schemas/created_at"

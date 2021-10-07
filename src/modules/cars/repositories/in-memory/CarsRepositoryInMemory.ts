@@ -1,4 +1,3 @@
-import { ICar } from '@modules/cars/dtos/ICar';
 import { ICreateCar } from '@modules/cars/dtos/ICreateCar';
 import Car from '@modules/cars/infra/typeorm/entities/Car';
 import { v4 as uuidv4 } from 'uuid';
@@ -11,30 +10,46 @@ export class CarsRepositoryInMemory implements ICarsRepository {
     this.cars = this.cars.filter(car => car.id !== id);
   }
 
-  async findAll(): Promise<ICar[]> {
+  async findAll(): Promise<Car[]> {
     return this.cars;
   }
 
-  async findById(id: string): Promise<ICar | undefined> {
+  async findById(id: string): Promise<Car | undefined> {
     return this.cars.find(car => car.id === id);
   }
 
-  async findByName(name: string): Promise<ICar | undefined> {
+  async findByName(name: string): Promise<Car | undefined> {
     return this.cars.find(car => car.name === name);
   }
 
-  async create(data: ICreateCar): Promise<ICar> {
-    const car = {
-      id: uuidv4(),
-      ...data,
+  async create({
+    available,
+    brand,
+    categoryId,
+    dailyRate,
+    description,
+    licensePlate,
+    name,
+  }: ICreateCar): Promise<Car> {
+    const car = new Car();
+    Object.assign(car, {
+      available,
+      brand,
+      categoryId,
+      dailyRate,
+      description,
+      licensePlate,
+      name,
       created_at: new Date(),
-    };
+      id: uuidv4(),
+    });
     this.cars.push(car);
     return car;
   }
 
-  async save(car: ICar): Promise<ICar> {
-    this.cars.push(car);
+  async save(car: Car): Promise<Car> {
+    const currentCar = this.cars.findIndex(({ id }) => id === car.id);
+    this.cars[currentCar] = car;
     return car;
   }
 }

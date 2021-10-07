@@ -5,29 +5,48 @@ import ApiError from '@shared/errors/ApiError';
 import { CreateCarService } from '.';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import { ICreateCar } from '../dtos/ICreateCar';
+import CategoriesRepositoryInMemory from '@modules/categories/repositories/in-memory/CategoriesRepositoryInMemory';
 
 describe('CreateCarService', () => {
   let carsRepositoryInMemory: CarsRepositoryInMemory;
+  let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
   let createCarService: CreateCarService;
   let carCreateObj: ICreateCar;
 
-  beforeEach(() => {
+  beforeEach(async () => {
+    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
     carsRepositoryInMemory = new CarsRepositoryInMemory();
-    createCarService = new CreateCarService(carsRepositoryInMemory);
+    createCarService = new CreateCarService(
+      carsRepositoryInMemory,
+      categoriesRepositoryInMemory,
+    );
+
+    const category = await categoriesRepositoryInMemory.create({
+      name: faker.vehicle.model(),
+      description: faker.lorem.sentence(),
+    });
+
     carCreateObj = {
       name: faker.vehicle.model(),
       brand: faker.vehicle.manufacturer(),
       description: faker.lorem.sentence(),
-      daily_rate: Number(faker.finance.amount()),
+      dailyRate: Number(faker.finance.amount()),
+      categoryId: category.id,
       available: true,
-      license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
-    } as ICreateCar;
+      licensePlate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+    };
   });
 
   describe('impossible to create a car', () => {
     describe('duplicate "name" in the bank', () => {
       test('If it return "Car name already used" is an instance of "ApiError"', async () => {
         await createCarService.execute(carCreateObj);
+        await expect(
+          createCarService.execute(carCreateObj),
+        ).rejects.toBeInstanceOf(ApiError);
+      });
+      test('If it return "Category not found" is an instance of "ApiError"', async () => {
+        carCreateObj.categoryId = '999';
         await expect(
           createCarService.execute(carCreateObj),
         ).rejects.toBeInstanceOf(ApiError);
