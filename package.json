@@ -10,7 +10,8 @@
     "lint-fix": "eslint . --ext .ts --fix",
     "test": "jest --forceExit --runInBand",
     "test:watch": "jest --forceExit --watch --runInBand",
-    "test:cov": "jest --forceExit --runInBand --coverage"
+    "test:cov": "jest --forceExit --runInBand --coverage",
+    "prepare": "husky install"
   },
   "dependencies": {
     "cors": "^2.8.5",
@@ -30,11 +31,11 @@
     "typeorm": "^0.2.37"
   },
   "devDependencies": {
-    "@types/http-status-codes": "^1.2.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/express-pino-logger": "^4.0.2",
     "@types/faker": "^5.5.8",
+    "@types/http-status-codes": "^1.2.0",
     "@types/jest": "^27.0.2",
     "@types/multer": "^1.4.7",
     "@types/node": "^16.9.4",
@@ -47,7 +48,9 @@
     "eslint-config-prettier": "^6.15.0",
     "eslint-plugin-prettier": "^3.2.0",
     "faker": "5.4.0",
+    "husky": ">=6",
     "jest": "^27.2.2",
+    "lint-staged": ">=10",
     "prettier": "^2.2.1",
     "ts-jest": "^27.0.5",
     "ts-node": "^10.2.1",
