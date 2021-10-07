@@ -5,23 +5,33 @@ import ApiError from '@shared/errors/ApiError';
 import { CreateCarService } from '.';
 import { CarsRepositoryInMemory } from '../repositories/in-memory/CarsRepositoryInMemory';
 import { ICreateCar } from '../dtos/ICreateCar';
+import CategoriesRepositoryInMemory from '@modules/categories/repositories/in-memory/CategoriesRepositoryInMemory';
 
 describe('CreateCarService', () => {
   let carsRepositoryInMemory: CarsRepositoryInMemory;
+  let categoriesRepositoryInMemory: CategoriesRepositoryInMemory;
   let createCarService: CreateCarService;
   let carCreateObj: ICreateCar;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     carsRepositoryInMemory = new CarsRepositoryInMemory();
     createCarService = new CreateCarService(carsRepositoryInMemory);
+    categoriesRepositoryInMemory = new CategoriesRepositoryInMemory();
+
+    const category = await categoriesRepositoryInMemory.create({
+      name: faker.vehicle.model(),
+      description: faker.lorem.sentence(),
+    });
+
     carCreateObj = {
       name: faker.vehicle.model(),
       brand: faker.vehicle.manufacturer(),
       description: faker.lorem.sentence(),
       daily_rate: Number(faker.finance.amount()),
+      category_id: category.id,
       available: true,
       license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
-    } as ICreateCar;
+    };
   });
 
   describe('impossible to create a car', () => {

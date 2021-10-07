@@ -1,7 +1,10 @@
+import Category from '@modules/categories/infra/typeorm/entities/Category';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -27,6 +30,13 @@ export default class Car {
 
   @Column()
   license_plate: string;
+
+  @Column()
+  category_id: string;
+
+  @ManyToOne(() => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 
   @CreateDateColumn()
   created_at: Date;

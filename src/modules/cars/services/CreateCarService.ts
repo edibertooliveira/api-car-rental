@@ -2,8 +2,9 @@ import { inject, injectable } from 'tsyringe';
 
 import ApiError from '../../../shared/errors/ApiError';
 import { ICarsRepository } from '../repositories/ICarsRepository';
-import { ICar } from '../dtos/ICar';
 import { ICreateCar } from '../dtos/ICreateCar';
+import Car from '../infra/typeorm/entities/Car';
+import { StatusCodes } from 'http-status-codes';
 
 @injectable()
 export default class CreateCarService {
@@ -14,11 +15,12 @@ export default class CreateCarService {
     description,
     daily_rate,
     available,
+    category_id,
     license_plate,
-  }: ICreateCar): Promise<ICar> {
+  }: ICreateCar): Promise<Car> {
     const carExists = await this.carsRepository.findByName(name);
     if (carExists) {
-      throw new ApiError('Nome do carro já utilizado', 409);
+      throw new ApiError('Name of car already used', StatusCodes.CONFLICT);
     }
 
     return this.carsRepository.create({
@@ -27,6 +29,7 @@ export default class CreateCarService {
       description,
       daily_rate,
       available,
+      category_id,
       license_plate,
     });
   }
