@@ -33,19 +33,19 @@ describe('UpdateCarService', () => {
         name: faker.vehicle.model(),
         brand: faker.vehicle.manufacturer(),
         description: faker.lorem.sentence(),
-        daily_rate: Number(faker.finance.amount()),
-        category_id: category.id,
+        dailyRate: Number(faker.finance.amount()),
+        categoryId: category.id,
         available: true,
-        license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+        licensePlate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
       } as ICreateCar,
       {
         name: faker.vehicle.model(),
         brand: faker.vehicle.manufacturer(),
         description: faker.lorem.sentence(),
-        daily_rate: Number(faker.finance.amount()),
-        category_id: category.id,
+        dailyRate: Number(faker.finance.amount()),
+        categoryId: category.id,
         available: false,
-        license_plate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
+        licensePlate: `${faker.finance.currencyCode()}-${faker.finance.mask()}`,
       } as ICreateCar,
     ];
     car = { ...(await carsRepositoryInMemory.create(carObj[0])) };
@@ -73,7 +73,7 @@ describe('UpdateCarService', () => {
       });
     });
     test('If it return "Category not found" is an instance of "ApiError"', async () => {
-      car.category_id = '999';
+      car.categoryId = '999';
       await expect(updateCarService.execute(car)).rejects.toBeInstanceOf(
         ApiError,
       );
@@ -95,20 +95,20 @@ describe('UpdateCarService', () => {
         updateCarService.execute({ ...car, description: null }),
       ).resolves.not.toHaveProperty('description', null);
     });
-    test('if the "daily_rate" field does not return false', async () => {
+    test('if the "dailyRate" field does not return false', async () => {
       await expect(
-        updateCarService.execute({ ...car, daily_rate: null }),
-      ).resolves.not.toHaveProperty('daily_rate', null);
+        updateCarService.execute({ ...car, dailyRate: null }),
+      ).resolves.not.toHaveProperty('dailyRate', null);
     });
-    test('if the "category_id" field does not return false', async () => {
+    test('if the "categoryId" field does not return false', async () => {
       await expect(
-        updateCarService.execute({ ...car, category_id: null }),
-      ).resolves.not.toHaveProperty('category_id', null);
+        updateCarService.execute({ ...car, categoryId: null }),
+      ).resolves.not.toHaveProperty('categoryId', null);
     });
-    test('if the "license_plate" field does not return false "license_plate"', async () => {
+    test('if the "licensePlate" field does not return false "licensePlate"', async () => {
       await expect(
-        updateCarService.execute({ ...car, license_plate: null }),
-      ).resolves.not.toHaveProperty('license_plate', null);
+        updateCarService.execute({ ...car, licensePlate: null }),
+      ).resolves.not.toHaveProperty('licensePlate', null);
     });
     test('if fields have been updated successfully', async () => {
       const category = await categoriesRepositoryInMemory.create({
@@ -118,14 +118,14 @@ describe('UpdateCarService', () => {
       const result = await updateCarService.execute({
         id: car.id,
         ...carObj[1],
-        category_id: category.id,
+        categoryId: category.id,
       });
       expect(result).not.toHaveProperty('name', car.name);
       expect(result).not.toHaveProperty('brand', car.brand);
       expect(result).not.toHaveProperty('description', car.description);
-      expect(result).not.toHaveProperty('daily_rate', car.daily_rate);
-      expect(result).not.toHaveProperty('category_id', car.category_id);
-      expect(result).not.toHaveProperty('license_plate', car.license_plate);
+      expect(result).not.toHaveProperty('dailyRate', car.dailyRate);
+      expect(result).not.toHaveProperty('categoryId', car.categoryId);
+      expect(result).not.toHaveProperty('licensePlate', car.licensePlate);
     });
   });
 });

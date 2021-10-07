@@ -34,19 +34,19 @@ export default class CarsRepository implements ICarsRepository {
     name,
     brand,
     description,
-    daily_rate,
+    dailyRate,
     available,
-    category_id,
-    license_plate,
+    categoryId,
+    licensePlate,
   }: ICreateCar): Promise<Car> {
     const car = this.entityRepository.create({
       name,
       brand,
       description,
-      daily_rate,
+      dailyRate,
       available,
-      category_id,
-      license_plate,
+      categoryId,
+      licensePlate,
     });
 
     return this.entityRepository.save(car);

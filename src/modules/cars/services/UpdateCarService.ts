@@ -18,10 +18,10 @@ export default class UpdateCarService {
     name,
     brand,
     description,
-    daily_rate,
+    dailyRate,
     available,
-    category_id,
-    license_plate,
+    categoryId,
+    licensePlate,
   }: IUpdateCar): Promise<Car> {
     const carExists = await this.carsRepository.findById(id);
     if (!carExists) {
@@ -34,21 +34,21 @@ export default class UpdateCarService {
       throw new ApiError('Name of car already used', StatusCodes.CONFLICT);
     }
 
-    if (category_id) {
+    if (categoryId) {
       const categoryExists = await this.categoriesRepository.findById(
-        category_id,
+        categoryId,
       );
       if (!categoryExists) {
         throw new ApiError('Category not found', StatusCodes.NOT_FOUND);
       }
-      carExists.category_id = category_id;
+      carExists.categoryId = categoryId;
     }
 
     if (name) carExists.name = name;
     if (brand) carExists.brand = brand;
     if (description) carExists.description = description;
-    if (daily_rate) carExists.daily_rate = daily_rate;
-    if (license_plate) carExists.license_plate = license_plate;
+    if (dailyRate) carExists.dailyRate = dailyRate;
+    if (licensePlate) carExists.licensePlate = licensePlate;
 
     carExists.available = available;
     await this.carsRepository.save(carExists);

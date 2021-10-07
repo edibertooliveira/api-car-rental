@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { CreateCategoryService } from '@modules/categories/services';
 
 import { container } from 'tsyringe';
+import { StatusCodes } from 'http-status-codes';
 
 export default class CarsController {
   public async create(request: Request, response: Response): Promise<Response> {
@@ -11,6 +12,6 @@ export default class CarsController {
       name,
       description,
     });
-    return response.status(201).json(car);
+    return response.status(StatusCodes.CREATED).json(car);
   }
 }

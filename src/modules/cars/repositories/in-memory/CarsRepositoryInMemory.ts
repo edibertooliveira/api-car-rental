@@ -25,20 +25,20 @@ export class CarsRepositoryInMemory implements ICarsRepository {
   async create({
     available,
     brand,
-    category_id,
-    daily_rate,
+    categoryId,
+    dailyRate,
     description,
-    license_plate,
+    licensePlate,
     name,
   }: ICreateCar): Promise<Car> {
     const car = new Car();
     Object.assign(car, {
       available,
       brand,
-      category_id,
-      daily_rate,
+      categoryId,
+      dailyRate,
       description,
-      license_plate,
+      licensePlate,
       name,
       created_at: new Date(),
       id: uuidv4(),
