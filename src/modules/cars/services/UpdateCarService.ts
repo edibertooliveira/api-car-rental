@@ -24,17 +24,23 @@ export default class UpdateCarService {
     license_plate,
   }: IUpdateCar): Promise<Car> {
     const carExists = await this.carsRepository.findById(id);
-    if (!carExists) throw new ApiError('Car not found', StatusCodes.NOT_FOUND);
+    if (!carExists) {
+      throw new ApiError('Car not found', StatusCodes.NOT_FOUND);
+    }
+
     const carNameExists = await this.carsRepository.findByName(name);
-    if (carNameExists && carNameExists.id !== id)
+
+    if (carNameExists && carNameExists.id !== id) {
       throw new ApiError('Name of car already used', StatusCodes.CONFLICT);
+    }
 
     if (category_id) {
       const categoryExists = await this.categoriesRepository.findById(
         category_id,
       );
-      if (!categoryExists)
+      if (!categoryExists) {
         throw new ApiError('Category not found', StatusCodes.NOT_FOUND);
+      }
       carExists.category_id = category_id;
     }
 

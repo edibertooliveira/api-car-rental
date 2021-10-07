@@ -7,7 +7,7 @@
   "password": "postgres",
   "database": "api-cars",
   "entities": [
-    "./src/modules/**/typeorm/entities/*.ts"
+    "./src/modules/**/infra/typeorm/entities/*.ts"
   ],
   "migrations": [
     "./src/shared/infra/typeorm/migrations/*.ts"
