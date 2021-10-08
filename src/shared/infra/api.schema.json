@@ -20,9 +20,7 @@
         "summary": "Responsible for obtaining the car registration",
         "description": "Search the database information",
         "operationId": "CarsController.index",
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "security": [
           {
             "bearerAuth": []
@@ -41,9 +39,7 @@
         "summary": "Responsible for changing the car registration",
         "description": "Modify car database information",
         "operationId": "ProfileController.create",
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "security": [
           {
             "bearerAuth": []
@@ -108,9 +104,7 @@
         "summary": "Responsible for obtaining the car registration",
         "description": "Search the database information",
         "operationId": "CarsController.show",
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "parameters": [
           {
             "name": "id",
@@ -150,9 +144,7 @@
         "summary": "Responsible for changing the car registration",
         "description": "Modify car database information",
         "operationId": "ProfileController.update",
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "security": [
           {
             "bearerAuth": []
@@ -227,9 +219,7 @@
         "summary": "Responsible for deleting the car registration",
         "description": "Delete/Block car database information",
         "operationId": "ProfileController.destroy",
-        "tags": [
-          "Cars"
-        ],
+        "tags": ["Cars"],
         "security": [
           {
             "bearerAuth": []
