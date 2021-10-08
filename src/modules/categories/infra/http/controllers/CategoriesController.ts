@@ -17,8 +17,9 @@ export default class CategoriesController {
   }
 
   public async import(request: Request, response: Response): Promise<Response> {
+    const { filename } = request.file;
     const importCategories = container.resolve(ImportCategoryService);
-    const filesStream = await importCategories.execute();
-    return response.status(StatusCodes.OK).send(filesStream);
+    const file = await importCategories.execute({ filename });
+    return response.status(StatusCodes.OK).json(file);
   }
 }

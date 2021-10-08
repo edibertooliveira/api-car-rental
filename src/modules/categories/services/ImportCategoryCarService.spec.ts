@@ -14,7 +14,9 @@ describe('ImportCategoryCarService.ts', () => {
 
   describe('Possible to import category', () => {
     test('If return buff', async () => {
-      const result = await importCategoryService.execute();
+      const result = await importCategoryService.execute({
+        filename: 'categories_cars.csv',
+      });
       expect(result).toBeTruthy();
     });
   });
