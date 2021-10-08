@@ -1,10 +1,11 @@
 import { Router } from 'express';
-import { CategoriesController } from '../controllers';
+import { CategoriesController } from '../controllers/';
 
-const carsRouter = Router();
+const categoriesRouter = Router();
 
 const categoriesController = new CategoriesController();
 
-carsRouter.post('/', categoriesController.create);
+categoriesRouter.post('/', categoriesController.create);
+categoriesRouter.get('/imports', categoriesController.import);
 
-export default carsRouter;
+export default categoriesRouter;
