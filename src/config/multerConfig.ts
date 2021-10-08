@@ -10,11 +10,11 @@ interface IUploadConfig {
   };
 }
 
-function fileFilter(req, file, cb) {
+function fileFilter(req, file, callback) {
   if (!file.originalname.match(/\.(csv)$/)) {
-    return cb(new ApiError('Please upload a csv file'), false);
+    return callback(new ApiError('Please upload a csv file'), false);
   }
-  cb(null, true);
+  callback(null, true);
 }
 
 export const uploadFolder = path.resolve(__dirname, '..', '..', 'database');
