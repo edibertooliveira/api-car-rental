@@ -2,9 +2,10 @@ import { inject, injectable } from 'tsyringe';
 import fs from 'fs';
 import path from 'path';
 import csvParse from 'csv-parse';
+import { uploadFolder } from '@config/multerConfig';
 
 import { ICategoriesRepository } from '../repositories/ICategoriesRepository';
-import { ICreateCategory } from '../dtos/ICreateCategory';
+import Category from '../infra/typeorm/entities/Category';
 
 interface IImportCategory {
   filename: string;
@@ -15,42 +16,23 @@ export default class ImportCategoryService {
   constructor(
     @inject('category') private categoriesRepository: ICategoriesRepository,
   ) {}
-  public async execute({
-    filename,
-  }: IImportCategory): Promise<ICreateCategory[]> {
-    return new Promise((resolve, reject) => {
-      const file = path.resolve(
-        __dirname,
-        '..',
-        '..',
-        '..',
-        '..',
-        'database',
-        filename,
-      );
-      const stream = fs.createReadStream(file);
-      const categories: ICreateCategory[] = [];
-      const parseFile = csvParse();
+  public async execute({ filename }: IImportCategory): Promise<Category[]> {
+    const csvConversor = csvParse();
+    const file = path.resolve(uploadFolder, filename);
+    const categories: Category[] = [];
 
-      stream.pipe(parseFile);
-
-      parseFile
-        .on('data', async chunk => {
-          //3
-          const [name, description] = chunk;
-
-          categories.push({
-            name,
-            description,
-          });
-        })
-        .on('end', async () => {
-          //1
-          resolve(categories);
-        })
-        .on('error', error => {
-          reject(error);
+    await fs
+      .createReadStream(file)
+      .pipe(csvConversor)
+      .on('data', async chunk => {
+        const { name, description } = chunk;
+        const category = await this.categoriesRepository.create({
+          name,
+          description,
         });
-    });
+        categories.push(category);
+      });
+
+    return categories;
   }
 }
