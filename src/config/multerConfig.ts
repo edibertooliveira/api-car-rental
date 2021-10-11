@@ -22,7 +22,7 @@ export const uploadFolder = path.resolve(__dirname, '..', '..', 'database');
 export default {
   directory: uploadFolder,
   multer: {
-    limits: { fileSize: '1000000' },
+    limits: { fileSize: '5242880' }, //5mb
     fileFilter,
     storage: multer.diskStorage({
       destination: uploadFolder,
