@@ -1,3 +1,4 @@
+import { CarsRepositoryInMemory } from '@modules/cars/repositories/in-memory/CarsRepositoryInMemory';
 import CategoriesRepositoryInMemory from '../repositories/in-memory/CategoriesRepositoryInMemory';
 import ImportCategoryService from './ImportCategoryService';
 
@@ -13,11 +14,12 @@ describe('ImportCategoryCarService.ts', () => {
   });
 
   describe('Possible to import category', () => {
-    test('If return buff', async () => {
+    test('If return array of categories', async () => {
       const result = await importCategoryService.execute({
         filename: 'categories_cars.csv',
       });
       expect(result).toBeTruthy();
+      expect(result).toHaveLength(3);
     });
   });
 });
