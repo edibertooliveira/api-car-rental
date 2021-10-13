@@ -1,10 +1,18 @@
 import { Router } from 'express';
-import { CategoriesController } from '../controllers';
+import { CategoriesController } from '../controllers/';
+import uploadConfig from '@config/multerConfig';
+import multer from 'multer';
 
-const carsRouter = Router();
+const upload = multer(uploadConfig.multer);
+const categoriesRouter = Router();
 
 const categoriesController = new CategoriesController();
 
-carsRouter.post('/', categoriesController.create);
+categoriesRouter.post('/', categoriesController.create);
+categoriesRouter.post(
+  '/imports',
+  upload.single('file'),
+  categoriesController.import,
+);
 
-export default carsRouter;
+export default categoriesRouter;
