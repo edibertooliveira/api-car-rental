@@ -5,6 +5,6 @@ const carsRouter = Router();
 
 const categoriesController = new CategoriesController();
 
-carsRouter.post('/', categoriesController.create);
+carsRouter.post('/imports', categoriesController.create);
 
 export default carsRouter;
