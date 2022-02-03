@@ -1,0 +1,21 @@
+name: CI - Api Car rental
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    
+    - name: setup node environment
+      uses: actions/setup-node@v2
+      with:
+        node-version: 14.x
+    
+    - name: install dependence
+      run: yarn
